@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, MTLPropertyStorage) {
 ///                   (like a KVC validation error).
 ///
 /// Returns an initialized model object, or nil if validation failed.
-+ (nullable instancetype)modelWithDictionary:(nullable NSDictionary *)dictionaryValue error:(NSError **)error;
++ (nullable instancetype)modelWithDictionary:(nullable NSDictionary<NSString *, id> *)dictionaryValue error:(NSError **)error NS_SWIFT_UNAVAILABLE("Use MTLModelProtocol.init(dictionary:)");
 
 /// A dictionary representing the properties of the receiver.
 ///
@@ -58,7 +58,7 @@ typedef NS_ENUM(NSInteger, MTLPropertyStorage) {
 /// with any nil values represented by NSNull.
 ///
 /// This property must never be nil.
-@property (nonatomic, copy, readonly) NSDictionary *dictionaryValue;
+@property (nonatomic, copy, readonly) NSDictionary<NSString *, id> *dictionaryValue;
 
 /// Initializes the receiver using key-value coding, setting the keys and values
 /// in the given dictionary.
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, MTLPropertyStorage) {
 ///                   (like a KVC validation error).
 ///
 /// Returns an initialized model object, or nil if validation failed.
-- (nullable instancetype)initWithDictionary:(nullable NSDictionary *)dictionaryValue error:(NSError **)error;
+- (nullable instancetype)initWithDictionary:(nullable NSDictionary<NSString *, id> *)dictionaryValue error:(NSError **)error;
 
 /// Merges the value of the given key on the receiver with the value of the same
 /// key from the given model object, giving precedence to the other model object.
@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, MTLPropertyStorage) {
 
 /// Returns the keys for all @property declarations, except for `readonly`
 /// properties without ivars, or properties on MTLModel itself.
-+ (NSSet *)propertyKeys;
++ (NSSet<NSString *> *)propertyKeys;
 
 /// Validates the model.
 ///
@@ -115,7 +115,7 @@ typedef NS_ENUM(NSInteger, MTLPropertyStorage) {
 ///                   (like a KVC validation error).
 ///
 /// Returns an initialized model object, or nil if validation failed.
-- (nullable instancetype)initWithDictionary:(nullable NSDictionary *)dictionaryValue error:(NSError **)error;
+- (nullable instancetype)initWithDictionary:(nullable NSDictionary<NSString *, id> *)dictionaryValue error:(NSError **)error;
 
 /// Initializes the receiver with default values.
 ///

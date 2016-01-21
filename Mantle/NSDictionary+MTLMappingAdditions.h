@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a dictionary that maps all properties of the given class to
 /// themselves.
-+ (NSDictionary *)mtl_identityPropertyMapWithModel:(Class)modelClass;
++ (NSDictionary<NSString *, NSString *> *)mtl_identityPropertyMapWithModel:(Class<MTLModel>)modelClass;
 
 @end
 

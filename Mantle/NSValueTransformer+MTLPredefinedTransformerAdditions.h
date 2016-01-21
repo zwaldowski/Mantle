@@ -58,12 +58,12 @@ extern NSString * const MTLBooleanValueTransformerName;
 ///
 /// Returns a transformer which will map from keys to objects for forward
 /// transformations, and from objects to keys for reverse transformations.
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_valueMappingTransformerWithDictionary:(NSDictionary *)dictionary defaultValue:(nullable id)defaultValue reverseDefaultValue:(nullable id)reverseDefaultValue;
++ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_valueMappingTransformerWithDictionary:(NSDictionary<NSString *, id> *)dictionary defaultValue:(nullable id)defaultValue reverseDefaultValue:(nullable id)reverseDefaultValue;
 
 /// Returns a value transformer created by calling
 /// `+mtl_valueMappingTransformerWithDictionary:defaultValue:reverseDefaultValue:`
 /// with a default value of `nil` and a reverse default value of `nil`.
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_valueMappingTransformerWithDictionary:(NSDictionary *)dictionary;
++ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_valueMappingTransformerWithDictionary:(NSDictionary<NSString *, id> *)dictionary;
 
 /// A reversible value transformer to transform between a date and its string
 /// representation
