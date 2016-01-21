@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSDictionary (MTLJSONKeyPath)
 
 /// Looks up the value of a key path in the receiver.
@@ -22,6 +24,8 @@
 ///
 /// Returns the value for the key path which may be nil. Clients should inspect
 /// the success parameter to decide how to proceed with the result.
-- (id)mtl_valueForJSONKeyPath:(NSString *)JSONKeyPath success:(BOOL *)success error:(NSError **)error;
+- (nullable id)mtl_valueForJSONKeyPath:(NSString *)JSONKeyPath success:(nullable BOOL *)success error:(NSError **)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

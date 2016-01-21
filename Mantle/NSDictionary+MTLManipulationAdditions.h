@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSDictionary (MTLManipulationAdditions)
 
 /// Merges the keys and values from the given dictionary into the receiver. If
@@ -16,11 +18,11 @@
 ///
 /// Returns a new dictionary containing the entries of the receiver combined with
 /// those of `dictionary`.
-- (NSDictionary *)mtl_dictionaryByAddingEntriesFromDictionary:(NSDictionary *)dictionary;
+- (NSDictionary *)mtl_dictionaryByAddingEntriesFromDictionary:(nullable NSDictionary *)dictionary;
 
 /// Creates a new dictionary with all the entries for the given keys removed from
 /// the receiver.
-- (NSDictionary *)mtl_dictionaryByRemovingValuesForKeys:(NSArray *)keys;
+- (NSDictionary *)mtl_dictionaryByRemovingValuesForKeys:(nullable NSArray *)keys;
 
 @end
 
@@ -29,3 +31,5 @@
 - (NSDictionary *)mtl_dictionaryByRemovingEntriesWithKeys:(NSSet *)keys __attribute__((deprecated("Replaced by -mtl_dictionaryByRemovingValuesForKeys:")));
 
 @end
+
+NS_ASSUME_NONNULL_END

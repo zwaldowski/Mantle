@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSError (MTLModelException)
 
 /// Creates a new error for an exception that occurred during updating an
@@ -21,3 +23,5 @@
 + (instancetype)mtl_modelErrorWithException:(NSException *)exception;
 
 @end
+
+NS_ASSUME_NONNULL_END

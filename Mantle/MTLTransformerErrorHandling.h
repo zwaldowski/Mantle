@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// The domain for errors originating from the MTLTransformerErrorHandling
 /// protocol.
 ///
@@ -42,7 +44,7 @@ extern NSString * const MTLTransformerErrorHandlingInputValueErrorKey;
 ///
 /// Returns the result of the transformation which may be nil. Clients should
 /// inspect the success parameter to decide how to proceed with the result.
-- (id)transformedValue:(id)value success:(BOOL *)success error:(NSError **)error;
+- (nullable id)transformedValue:(nullable id)value success:(BOOL *)success error:(NSError **)error;
 
 @optional
 
@@ -61,6 +63,8 @@ extern NSString * const MTLTransformerErrorHandlingInputValueErrorKey;
 /// Returns the result of the reverse transformation which may be nil. Clients
 /// should inspect the success parameter to decide how to proceed with the
 /// result.
-- (id)reverseTransformedValue:(id)value success:(BOOL *)success error:(NSError **)error;
+- (nullable id)reverseTransformedValue:(nullable id)value success:(BOOL *)success error:(NSError **)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

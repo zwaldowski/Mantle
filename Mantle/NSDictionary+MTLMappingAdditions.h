@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSDictionary (MTLMappingAdditions)
 
 /// Creates an identity mapping for serialization.
@@ -19,3 +21,5 @@
 + (NSDictionary *)mtl_identityPropertyMapWithModel:(Class)modelClass;
 
 @end
+
+NS_ASSUME_NONNULL_END

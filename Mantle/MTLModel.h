@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Defines a property's storage behavior, which affects how it will be copied,
 /// compared, and persisted.
 ///
@@ -48,7 +50,7 @@ typedef enum : NSUInteger {
 ///                   (like a KVC validation error).
 ///
 /// Returns an initialized model object, or nil if validation failed.
-+ (instancetype)modelWithDictionary:(NSDictionary *)dictionaryValue error:(NSError **)error;
++ (nullable instancetype)modelWithDictionary:(nullable NSDictionary *)dictionaryValue error:(NSError **)error;
 
 /// A dictionary representing the properties of the receiver.
 ///
@@ -74,7 +76,7 @@ typedef enum : NSUInteger {
 ///                   (like a KVC validation error).
 ///
 /// Returns an initialized model object, or nil if validation failed.
-- (instancetype)initWithDictionary:(NSDictionary *)dictionaryValue error:(NSError **)error;
+- (nullable instancetype)initWithDictionary:(nullable NSDictionary *)dictionaryValue error:(NSError **)error;
 
 /// Merges the value of the given key on the receiver with the value of the same
 /// key from the given model object, giving precedence to the other model object.
@@ -113,7 +115,7 @@ typedef enum : NSUInteger {
 ///                   (like a KVC validation error).
 ///
 /// Returns an initialized model object, or nil if validation failed.
-- (instancetype)initWithDictionary:(NSDictionary *)dictionaryValue error:(NSError **)error;
+- (nullable instancetype)initWithDictionary:(nullable NSDictionary *)dictionaryValue error:(NSError **)error;
 
 /// Initializes the receiver with default values.
 ///
@@ -157,7 +159,7 @@ typedef enum : NSUInteger {
 /// The default implementation is based on the receiver's class and all its
 /// properties for which +storageBehaviorForPropertyWithKey: returns
 /// MTLPropertyStoragePermanent.
-- (NSString *)description;
+@property (readonly, copy) NSString *description;
 
 @end
 
@@ -177,3 +179,5 @@ typedef enum : NSUInteger {
 - (BOOL)validate:(NSError **)error;
 
 @end
+
+NS_ASSUME_NONNULL_END
