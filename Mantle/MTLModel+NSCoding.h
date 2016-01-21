@@ -23,6 +23,8 @@ typedef enum : NSUInteger {
     MTLModelEncodingBehaviorConditional,
 } MTLModelEncodingBehavior;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Implements default archiving and unarchiving behaviors for MTLModel.
 @interface MTLModel (NSCoding) <NSCoding>
 
@@ -33,7 +35,7 @@ typedef enum : NSUInteger {
 /// +propertyKeys.
 ///
 /// Returns an initialized model object, or nil if a decoding error occurred.
-- (id)initWithCoder:(NSCoder *)coder;
+- (nullable instancetype)initWithCoder:(NSCoder *)coder;
 
 /// Archives the receiver using the given coder.
 ///
@@ -96,7 +98,7 @@ typedef enum : NSUInteger {
 /// modelVersion - The version of the original model object that was encoded.
 ///
 /// Returns the decoded and boxed value, or nil if the key was not present.
-- (id)decodeValueForKey:(NSString *)key withCoder:(NSCoder *)coder modelVersion:(NSUInteger)modelVersion;
+- (nullable id)decodeValueForKey:(NSString *)key withCoder:(NSCoder *)coder modelVersion:(NSUInteger)modelVersion;
 
 /// The version of this MTLModel subclass.
 ///
@@ -123,6 +125,8 @@ typedef enum : NSUInteger {
 ///                          representation was encoded.
 ///
 /// Returns nil by default, indicating that conversion failed.
-+ (NSDictionary *)dictionaryValueFromArchivedExternalRepresentation:(NSDictionary *)externalRepresentation version:(NSUInteger)fromVersion;
++ (nullable NSDictionary *)dictionaryValueFromArchivedExternalRepresentation:(NSDictionary *)externalRepresentation version:(NSUInteger)fromVersion;
 
 @end
+
+NS_ASSUME_NONNULL_END

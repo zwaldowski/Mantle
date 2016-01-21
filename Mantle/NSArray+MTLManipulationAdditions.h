@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSArray (MTLManipulationAdditions)
 
 /// Returns a new array without all instances of the given object.
@@ -22,3 +24,5 @@
 - (NSArray *)mtl_arrayByRemovingLastObject;
 
 @end
+
+NS_ASSUME_NONNULL_END

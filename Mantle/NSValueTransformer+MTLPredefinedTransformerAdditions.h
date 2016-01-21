@@ -10,6 +10,8 @@
 
 #import "MTLTransformerErrorHandling.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// The name for a value transformer that converts strings into URLs and back.
 extern NSString * const MTLURLValueTransformerName;
 
@@ -56,7 +58,7 @@ extern NSString * const MTLBooleanValueTransformerName;
 ///
 /// Returns a transformer which will map from keys to objects for forward
 /// transformations, and from objects to keys for reverse transformations.
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_valueMappingTransformerWithDictionary:(NSDictionary *)dictionary defaultValue:(id)defaultValue reverseDefaultValue:(id)reverseDefaultValue;
++ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_valueMappingTransformerWithDictionary:(NSDictionary *)dictionary defaultValue:(nullable id)defaultValue reverseDefaultValue:(nullable id)reverseDefaultValue;
 
 /// Returns a value transformer created by calling
 /// `+mtl_valueMappingTransformerWithDictionary:defaultValue:reverseDefaultValue:`
@@ -73,12 +75,12 @@ extern NSString * const MTLBooleanValueTransformerName;
 ///
 /// Returns a transformer which will map from strings to dates for forward
 /// transformations, and from dates to strings for reverse transformations.
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_dateTransformerWithDateFormat:(NSString *)dateFormat calendar:(NSCalendar *)calendar locale:(NSLocale *)locale timeZone:(NSTimeZone *)timeZone defaultDate:(NSDate *)defaultDate;
++ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_dateTransformerWithDateFormat:(NSString *)dateFormat calendar:(nullable NSCalendar *)calendar locale:(nullable NSLocale *)locale timeZone:(nullable NSTimeZone *)timeZone defaultDate:(nullable NSDate *)defaultDate;
 
 /// Returns a value transformer created by calling
 /// `+mtl_dateTransformerWithDateFormat:calendar:locale:timeZone:defaultDate:`
 /// with a calendar, locale, time zone and default date of `nil`.
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_dateTransformerWithDateFormat:(NSString *)dateFormat locale:(NSLocale *)locale;
++ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_dateTransformerWithDateFormat:(NSString *)dateFormat locale:(nullable NSLocale *)locale;
 
 /// A reversible value transformer to transform between a number and its string
 /// representation
@@ -87,7 +89,7 @@ extern NSString * const MTLBooleanValueTransformerName;
 ///
 /// Returns a transformer which will map from strings to numbers for forward
 /// transformations, and from numbers to strings for reverse transformations.
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_numberTransformerWithNumberStyle:(NSNumberFormatterStyle)numberStyle locale:(NSLocale *)locale;
++ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_numberTransformerWithNumberStyle:(NSNumberFormatterStyle)numberStyle locale:(nullable NSLocale *)locale;
 
 /// A reversible value transformer to transform between an object and its string
 /// representation
@@ -113,3 +115,5 @@ extern NSString * const MTLBooleanValueTransformerName;
 + (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_JSONArrayTransformerWithModelClass:(Class)modelClass __attribute__((deprecated("Replaced by +[MTLJSONAdapter arrayTransformerWithModelClass:]")));
 
 @end
+
+NS_ASSUME_NONNULL_END

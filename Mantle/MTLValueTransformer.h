@@ -21,7 +21,9 @@
 ///           transforming the value.
 ///
 /// Returns the result of the transformation, which may be nil.
-typedef id (^MTLValueTransformerBlock)(id value, BOOL *success, NSError **error);
+typedef id _Nullable (^MTLValueTransformerBlock)(_Nullable id value, BOOL *_Nonnull success, NSError *_Nullable *_Nullable error);
+
+NS_ASSUME_NONNULL_BEGIN
 
 ///
 /// A value transformer supporting block-based transformation.
@@ -50,3 +52,5 @@ typedef id (^MTLValueTransformerBlock)(id value, BOOL *success, NSError **error)
 + (NSValueTransformer *)reversibleTransformerWithForwardBlock:(id (^)(id))forwardBlock reverseBlock:(id (^)(id))reverseBlock __attribute__((deprecated("Replaced by +transformerUsingForwardBlock:reverseBlock:")));
 
 @end
+
+NS_ASSUME_NONNULL_END
