@@ -17,20 +17,6 @@ static NSString * const MTLModelVersionKey = @"MTLModelVersion";
 // Used to cache the reflection performed in +allowedSecureCodingClassesByPropertyKey.
 static void *MTLModelCachedAllowedClassesKey = &MTLModelCachedAllowedClassesKey;
 
-// Returns whether the given NSCoder requires secure coding.
-static BOOL coderRequiresSecureCoding(NSCoder *coder) {
-	SEL requiresSecureCodingSelector = @selector(requiresSecureCoding);
-
-	// Only invoke the method if it's implemented (i.e., only on OS X 10.8+ and
-	// iOS 6+).
-	if (![coder respondsToSelector:requiresSecureCodingSelector]) return NO;
-
-	BOOL (*requiresSecureCodingIMP)(NSCoder *, SEL) = (__typeof__(requiresSecureCodingIMP))[coder methodForSelector:requiresSecureCodingSelector];
-	if (requiresSecureCodingIMP == NULL) return NO;
-
-	return requiresSecureCodingIMP(coder, requiresSecureCodingSelector);
-}
-
 // Returns all of the given class' encodable property keys (those that will not
 // be excluded from archives).
 static NSSet *encodablePropertyKeysForClass(Class modelClass) {
@@ -136,7 +122,7 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 	}
 
 	@try {
-		if (coderRequiresSecureCoding(coder)) {
+		if (coder.requiresSecureCoding) {
 			NSArray *allowedClasses = self.class.allowedSecureCodingClassesByPropertyKey[key];
 			NSAssert(allowedClasses != nil, @"No allowed classes specified for securely decoding key \"%@\" on %@", key, self.class);
 			
@@ -153,14 +139,7 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 #pragma mark NSCoding
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
-	BOOL requiresSecureCoding = coderRequiresSecureCoding(coder);
-	NSNumber *version = nil;
-	if (requiresSecureCoding) {
-		version = [coder decodeObjectOfClass:NSNumber.class forKey:MTLModelVersionKey];
-	} else {
-		version = [coder decodeObjectForKey:MTLModelVersionKey];
-	}
-	
+	NSNumber *version = [coder decodeObjectOfClass:NSNumber.class forKey:MTLModelVersionKey];
 	if (version == nil) {
 		NSLog(@"Warning: decoding an archive of %@ without a version, assuming 0", self.class);
 	} else if (version.unsignedIntegerValue > self.class.modelVersion) {
@@ -168,7 +147,7 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 		return nil;
 	}
 
-	if (requiresSecureCoding) {
+	if (coder.requiresSecureCoding) {
 		verifyAllowedClassesByPropertyKey(self.class);
 	} else {
 		// Handle the old archive format.
@@ -205,7 +184,9 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
-	if (coderRequiresSecureCoding(coder)) verifyAllowedClassesByPropertyKey(self.class);
+	if (coder.requiresSecureCoding) {
+		verifyAllowedClassesByPropertyKey(self.class);
+	}
 
 	[coder encodeObject:@(self.class.modelVersion) forKey:MTLModelVersionKey];
 
