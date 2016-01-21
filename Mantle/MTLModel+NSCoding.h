@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// behaviors. If a property is an object with `weak` semantics, the default
 /// behavior is MTLModelEncodingBehaviorConditional; otherwise, the default is
 /// MTLModelEncodingBehaviorUnconditional.
-+ (NSDictionary *)encodingBehaviorsByPropertyKey;
++ (NSDictionary<NSString *, NSNumber *> *)encodingBehaviorsByPropertyKey;
 
 /// Determines the classes that are allowed to be decoded for each of the
 /// receiver's properties when using <NSSecureCoding>. The values of this
@@ -75,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// cannot be determined (e.g., it is declared as `id`), it will be omitted from
 /// the dictionary, and subclasses must provide a valid value to prevent an
 /// exception being thrown during encoding/decoding.
-+ (NSDictionary *)allowedSecureCodingClassesByPropertyKey;
++ (NSDictionary<NSString *, NSArray<Class<NSSecureCoding>> *> *)allowedSecureCodingClassesByPropertyKey;
 
 /// Decodes the value of the given property key from an archive.
 ///
@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///                          representation was encoded.
 ///
 /// Returns nil by default, indicating that conversion failed.
-+ (nullable NSDictionary *)dictionaryValueFromArchivedExternalRepresentation:(NSDictionary *)externalRepresentation version:(NSUInteger)fromVersion;
++ (nullable NSDictionary<NSString *, id> *)dictionaryValueFromArchivedExternalRepresentation:(NSDictionary<NSString *, id> *)externalRepresentation version:(NSUInteger)fromVersion;
 
 @end
 

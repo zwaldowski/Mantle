@@ -10,18 +10,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSArray (MTLManipulationAdditions)
+@interface NSArray<ObjectType> (MTLManipulationAdditions)
 
 /// Returns a new array without all instances of the given object.
-- (NSArray *)mtl_arrayByRemovingObject:(id)object;
+- (NSArray<ObjectType> *)mtl_arrayByRemovingObject:(ObjectType)object;
 
 /// Returns a new array without the first object. If the array is empty, it
 /// returns the empty array.
-- (NSArray *)mtl_arrayByRemovingFirstObject;
+- (NSArray<ObjectType> *)mtl_arrayByRemovingFirstObject;
 
 /// Returns a new array without the last object. If the array is empty, it
 /// returns the empty array.
-- (NSArray *)mtl_arrayByRemovingLastObject;
+- (NSArray<ObjectType> *)mtl_arrayByRemovingLastObject;
 
 @end
 
