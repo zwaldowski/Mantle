@@ -22,11 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// MTLPropertyStoragePermanent  - The property is included in serialization
 ///                                (like `NSCoding`) and equality, since it can
 ///                                be expected to stick around.
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSInteger, MTLPropertyStorage) {
     MTLPropertyStorageNone,
     MTLPropertyStorageTransitory,
     MTLPropertyStoragePermanent,
-} MTLPropertyStorage;
+};
 
 /// This protocol defines the minimal interface that classes need to implement to
 /// interact with Mantle adapters.

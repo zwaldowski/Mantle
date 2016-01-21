@@ -17,11 +17,11 @@
 ///                                         if unconditionally encoded elsewhere.
 ///                                         This should only be used for object
 ///                                         properties.
-typedef enum : NSUInteger {
+typedef NS_ENUM(NSInteger, MTLModelEncodingBehavior) {
     MTLModelEncodingBehaviorExcluded = 0,
     MTLModelEncodingBehaviorUnconditional,
     MTLModelEncodingBehaviorConditional,
-} MTLModelEncodingBehavior;
+};
 
 NS_ASSUME_NONNULL_BEGIN
 
