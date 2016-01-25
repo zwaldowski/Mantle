@@ -7,11 +7,9 @@
 //
 
 #import "NSError+MTLModelException.h"
+@import ObjectiveC;
 #import "MTLModel.h"
-#import <Mantle/EXTRuntimeExtensions.h>
-#import <Mantle/EXTScope.h>
 #import "MTLReflection.h"
-#import <objc/runtime.h>
 
 // Used to cache the reflection performed in +propertyKeys.
 static void *MTLModelCachedPropertyKeysKey = &MTLModelCachedPropertyKeysKey;
@@ -165,14 +163,12 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 		cls = cls.superclass;
 		if (properties == NULL) continue;
 
-		@onExit {
-			free(properties);
-		};
-
 		for (unsigned i = 0; i < count; i++) {
 			block(properties[i], &stop);
 			if (stop) break;
 		}
+
+		free(properties);
 	}
 }
 
@@ -226,20 +222,12 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 }
 
 + (MTLPropertyStorage)storageBehaviorForPropertyWithKey:(NSString *)propertyKey {
-	objc_property_t property = class_getProperty(self.class, propertyKey.UTF8String);
+	mtl_property_attr_t attributes = MTLAttributesForProperty(self.class, propertyKey);
+	if (attributes == 0) { return MTLPropertyStorageNone; }
 
-	if (property == NULL) return MTLPropertyStorageNone;
-
-	mtl_propertyAttributes *attributes = mtl_copyPropertyAttributes(property);
-	@onExit {
-		free(attributes);
-	};
-	
-	BOOL hasGetter = [self instancesRespondToSelector:attributes->getter];
-	BOOL hasSetter = [self instancesRespondToSelector:attributes->setter];
-	if (!attributes->dynamic && attributes->ivar == NULL && !hasGetter && !hasSetter) {
+	if (MTLPropertyIsRuntime(attributes)) {
 		return MTLPropertyStorageNone;
-	} else if (attributes->readonly && attributes->ivar == NULL) {
+	} else if (MTLPropertyIsComputed(attributes)) {
 		if ([self isEqual:MTLModel.class]) {
 			return MTLPropertyStorageNone;
 		} else {
@@ -257,7 +245,7 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 - (void)mergeValueForKey:(NSString *)key fromModel:(NSObject<MTLModel> *)model {
 	NSParameterAssert(key != nil);
 
-	SEL selector = MTLSelectorWithCapitalizedKeyPattern("merge", key, "FromModel:");
+	SEL selector = MTLSelectorWithKeyPattern("merge", key, "FromModel:");
 	if (![self respondsToSelector:selector]) {
 		if (model != nil) {
 			[self setValue:[model valueForKey:key] forKey:key];
@@ -266,9 +254,8 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 		return;
 	}
 
-	IMP imp = [self methodForSelector:selector];
-	void (*function)(id, SEL, id<MTLModel>) = (__typeof__(function))imp;
-	function(self, selector, model);
+	void (*mergeMsg)(id, SEL, id<MTLModel>) = (__typeof__(mergeMsg))objc_msgSend;
+	mergeMsg(self, selector, model);
 }
 
 - (void)mergeValuesForKeysFromModel:(id<MTLModel>)model {

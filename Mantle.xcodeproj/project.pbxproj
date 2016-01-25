@@ -16,14 +16,6 @@
 		88080C18160A706900CCABF2 /* NSArray+MTLManipulationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 88080C16160A706900CCABF2 /* NSArray+MTLManipulationAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		88080C19160A706900CCABF2 /* NSArray+MTLManipulationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 88080C17160A706900CCABF2 /* NSArray+MTLManipulationAdditions.m */; };
 		88080C1D160A719D00CCABF2 /* MTLArrayManipulationSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88080C1C160A719D00CCABF2 /* MTLArrayManipulationSpec.m */; };
-		A18397E11BA341BC00AB37BA /* EXTKeyPathCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D094E4751777617300906BF7 /* EXTKeyPathCoding.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		A18397E21BA341BF00AB37BA /* EXTKeyPathCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D094E4751777617300906BF7 /* EXTKeyPathCoding.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		A18397E31BA341C500AB37BA /* EXTRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D094E4761777617300906BF7 /* EXTRuntimeExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		A18397E41BA341C900AB37BA /* EXTRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D094E4761777617300906BF7 /* EXTRuntimeExtensions.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		A18397E51BA341CF00AB37BA /* EXTScope.h in Headers */ = {isa = PBXBuildFile; fileRef = D094E4781777617300906BF7 /* EXTScope.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		A18397E61BA341D300AB37BA /* EXTScope.h in Headers */ = {isa = PBXBuildFile; fileRef = D094E4781777617300906BF7 /* EXTScope.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		A18397E71BA341D900AB37BA /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D094E47A1777617300906BF7 /* metamacros.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		A18397E81BA341DC00AB37BA /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D094E47A1777617300906BF7 /* metamacros.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D01BD09D16CB432D00EC95C7 /* MTLJSONAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = D01BD09B16CB432D00EC95C7 /* MTLJSONAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D01BD09F16CB432D00EC95C7 /* MTLJSONAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = D01BD09C16CB432D00EC95C7 /* MTLJSONAdapter.m */; };
 		D01BD0AF16CB52E800EC95C7 /* MTLModel+NSCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = D01BD0AD16CB52E800EC95C7 /* MTLModel+NSCoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -57,8 +49,6 @@
 		D08B5AAE16002694001FE685 /* MTLValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D08B5AAC16002694001FE685 /* MTLValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D08B5AAF16002694001FE685 /* MTLValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B5AAD16002694001FE685 /* MTLValueTransformer.m */; };
 		D08B5AB216002A23001FE685 /* MTLValueTransformerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D08B5AB116002A23001FE685 /* MTLValueTransformerSpec.m */; };
-		D094E47B1777617500906BF7 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D094E4771777617300906BF7 /* EXTRuntimeExtensions.m */; };
-		D094E47D1777617800906BF7 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = D094E4791777617300906BF7 /* EXTScope.m */; };
 		D0BFC36717476A5F00F5DC5D /* MTLValueTransformerInversionAdditionsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BFC36617476A5F00F5DC5D /* MTLValueTransformerInversionAdditionsSpec.m */; };
 		D0BFC36F17476B4700F5DC5D /* NSValueTransformer+MTLInversionAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = D0BFC36D17476B4700F5DC5D /* NSValueTransformer+MTLInversionAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0BFC37117476B4700F5DC5D /* NSValueTransformer+MTLInversionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BFC36E17476B4700F5DC5D /* NSValueTransformer+MTLInversionAdditions.m */; };
@@ -87,8 +77,6 @@
 		D0E9C38C19F6DC5B000D427D /* NSValueTransformer+MTLInversionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BFC36E17476B4700F5DC5D /* NSValueTransformer+MTLInversionAdditions.m */; };
 		D0E9C38D19F6DC5B000D427D /* NSValueTransformer+MTLPredefinedTransformerAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F117471614C5600092520B /* NSValueTransformer+MTLPredefinedTransformerAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0E9C38E19F6DC5B000D427D /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F117481614C5600092520B /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */; };
-		D0E9C38F19F6DC83000D427D /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D094E4771777617300906BF7 /* EXTRuntimeExtensions.m */; };
-		D0E9C39019F6DC87000D427D /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = D094E4791777617300906BF7 /* EXTScope.m */; };
 		D0E9C39C19F6E04B000D427D /* MTLArrayManipulationSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 88080C1C160A719D00CCABF2 /* MTLArrayManipulationSpec.m */; };
 		D0E9C39D19F6E04B000D427D /* MTLComparisonAdditionsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 1ED5B5CB163A4E2B0072668E /* MTLComparisonAdditionsSpec.m */; };
 		D0E9C39E19F6E04B000D427D /* MTLDictionaryManipulationSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C27CF5161107E5002FE587 /* MTLDictionaryManipulationSpec.m */; };
@@ -107,6 +95,10 @@
 		D0F117491614C5600092520B /* NSValueTransformer+MTLPredefinedTransformerAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F117471614C5600092520B /* NSValueTransformer+MTLPredefinedTransformerAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0F1174A1614C5600092520B /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F117481614C5600092520B /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */; };
 		D0F1174D1614C8000092520B /* MTLPredefinedTransformerAdditionsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F1174C1614C8000092520B /* MTLPredefinedTransformerAdditionsSpec.m */; };
+		DB26757E1CE4A351001934FE /* MTLReflection.h in Headers */ = {isa = PBXBuildFile; fileRef = D058FE1D16EFB3D2009DFB47 /* MTLReflection.h */; };
+		DB26758E1CE4A352001934FE /* MTLReflection.h in Headers */ = {isa = PBXBuildFile; fileRef = D058FE1D16EFB3D2009DFB47 /* MTLReflection.h */; };
+		DB26759C1CE4A405001934FE /* NSDictionary+MTLJSONKeyPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 54EDCD0818D9B34F005796FC /* NSDictionary+MTLJSONKeyPath.h */; };
+		DB2675AC1CE4A406001934FE /* NSDictionary+MTLJSONKeyPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 54EDCD0818D9B34F005796FC /* NSDictionary+MTLJSONKeyPath.h */; };
 		DB2767F61CE2AB1B0050A7A7 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2767D41CE2AB0B0050A7A7 /* Nimble.framework */; };
 		DB2767F71CE2AB1B0050A7A7 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2767E51CE2AB0B0050A7A7 /* Quick.framework */; };
 		DB2767F81CE2AB290050A7A7 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2767D01CE2AB0B0050A7A7 /* Nimble.framework */; };
@@ -291,12 +283,6 @@
 		D08B5AAC16002694001FE685 /* MTLValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLValueTransformer.h; sourceTree = "<group>"; };
 		D08B5AAD16002694001FE685 /* MTLValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTLValueTransformer.m; sourceTree = "<group>"; };
 		D08B5AB116002A23001FE685 /* MTLValueTransformerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTLValueTransformerSpec.m; sourceTree = "<group>"; };
-		D094E4751777617300906BF7 /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
-		D094E4761777617300906BF7 /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXTRuntimeExtensions.h; sourceTree = "<group>"; };
-		D094E4771777617300906BF7 /* EXTRuntimeExtensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXTRuntimeExtensions.m; sourceTree = "<group>"; };
-		D094E4781777617300906BF7 /* EXTScope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
-		D094E4791777617300906BF7 /* EXTScope.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
-		D094E47A1777617300906BF7 /* metamacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
 		D094E4811777619600906BF7 /* Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
 		D094E4831777619600906BF7 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		D094E4841777619600906BF7 /* Profile.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Profile.xcconfig; sourceTree = "<group>"; };
@@ -427,7 +413,6 @@
 		D042FC3E15F72B23004E8054 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D090E63A15F73249005282F9 /* libextobjc */,
 				DB2767C31CE2AB0A0050A7A7 /* Nimble.xcodeproj */,
 				DB2767C61CE2AB0B0050A7A7 /* Quick.xcodeproj */,
 			);
@@ -539,20 +524,6 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
-		D090E63A15F73249005282F9 /* libextobjc */ = {
-			isa = PBXGroup;
-			children = (
-				D094E4751777617300906BF7 /* EXTKeyPathCoding.h */,
-				D094E4761777617300906BF7 /* EXTRuntimeExtensions.h */,
-				D094E4771777617300906BF7 /* EXTRuntimeExtensions.m */,
-				D094E4781777617300906BF7 /* EXTScope.h */,
-				D094E4791777617300906BF7 /* EXTScope.m */,
-				D094E47A1777617300906BF7 /* metamacros.h */,
-			);
-			name = libextobjc;
-			path = Mantle/extobjc;
-			sourceTree = SOURCE_ROOT;
-		};
 		D094E47F1777619600906BF7 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -658,19 +629,17 @@
 				D0760E0515FFBD440060F550 /* Mantle.h in Headers */,
 				D0760E7815FFBF330060F550 /* MTLModel.h in Headers */,
 				D08B5AAE16002694001FE685 /* MTLValueTransformer.h in Headers */,
-				A18397E11BA341BC00AB37BA /* EXTKeyPathCoding.h in Headers */,
 				88080C18160A706900CCABF2 /* NSArray+MTLManipulationAdditions.h in Headers */,
-				A18397E51BA341CF00AB37BA /* EXTScope.h in Headers */,
 				D0C27D0A16110973002FE587 /* NSDictionary+MTLManipulationAdditions.h in Headers */,
 				D0F117491614C5600092520B /* NSValueTransformer+MTLPredefinedTransformerAdditions.h in Headers */,
+				DB26759C1CE4A405001934FE /* NSDictionary+MTLJSONKeyPath.h in Headers */,
 				D053177A1A168D7100A5FBE2 /* NSDictionary+MTLMappingAdditions.h in Headers */,
+				DB26757E1CE4A351001934FE /* MTLReflection.h in Headers */,
 				1ED5B5D0163A4E3C0072668E /* NSObject+MTLComparisonAdditions.h in Headers */,
-				A18397E41BA341C900AB37BA /* EXTRuntimeExtensions.h in Headers */,
 				D01BD09D16CB432D00EC95C7 /* MTLJSONAdapter.h in Headers */,
 				DB2768251CE2B21F0050A7A7 /* MTLDefines.h in Headers */,
 				D05317721A168D3D00A5FBE2 /* MTLTransformerErrorHandling.h in Headers */,
 				D01BD0AF16CB52E800EC95C7 /* MTLModel+NSCoding.h in Headers */,
-				A18397E81BA341DC00AB37BA /* metamacros.h in Headers */,
 				D0BFC36F17476B4700F5DC5D /* NSValueTransformer+MTLInversionAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -682,19 +651,17 @@
 				D0E9C38319F6DC5B000D427D /* NSArray+MTLManipulationAdditions.h in Headers */,
 				D0E9C37919F6DC5B000D427D /* MTLModel+NSCoding.h in Headers */,
 				D0E9C38919F6DC5B000D427D /* NSObject+MTLComparisonAdditions.h in Headers */,
-				A18397E21BA341BF00AB37BA /* EXTKeyPathCoding.h in Headers */,
 				D0E9C38119F6DC5B000D427D /* MTLValueTransformer.h in Headers */,
-				A18397E61BA341D300AB37BA /* EXTScope.h in Headers */,
 				D0E9C38B19F6DC5B000D427D /* NSValueTransformer+MTLInversionAdditions.h in Headers */,
 				D05317741A168D3D00A5FBE2 /* MTLTransformerErrorHandling.h in Headers */,
+				DB2675AC1CE4A406001934FE /* NSDictionary+MTLJSONKeyPath.h in Headers */,
 				D053177B1A168D7200A5FBE2 /* NSDictionary+MTLMappingAdditions.h in Headers */,
+				DB26758E1CE4A352001934FE /* MTLReflection.h in Headers */,
 				D0E9C38D19F6DC5B000D427D /* NSValueTransformer+MTLPredefinedTransformerAdditions.h in Headers */,
-				A18397E31BA341C500AB37BA /* EXTRuntimeExtensions.h in Headers */,
 				D0E9C37D19F6DC5B000D427D /* MTLJSONAdapter.h in Headers */,
 				DB2768261CE2B21F0050A7A7 /* MTLDefines.h in Headers */,
 				D0E9C37719F6DC5B000D427D /* MTLModel.h in Headers */,
 				D0E9C38719F6DC5B000D427D /* NSDictionary+MTLManipulationAdditions.h in Headers */,
-				A18397E71BA341D900AB37BA /* metamacros.h in Headers */,
 				D0E9C37619F6DC5B000D427D /* Mantle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -988,9 +955,7 @@
 				DBBC60771C5A9C8C008BDFEA /* NSValueTransformer+MTLPredefinedTransformerAdditions.swift in Sources */,
 				D058FE2116EFB3D2009DFB47 /* MTLReflection.m in Sources */,
 				D0BFC37117476B4700F5DC5D /* NSValueTransformer+MTLInversionAdditions.m in Sources */,
-				D094E47B1777617500906BF7 /* EXTRuntimeExtensions.m in Sources */,
 				DBF0F34F1C51C936002CD163 /* MTLValueTransformer.swift in Sources */,
-				D094E47D1777617800906BF7 /* EXTScope.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1040,9 +1005,7 @@
 				DBBC60781C5A9C8C008BDFEA /* NSValueTransformer+MTLPredefinedTransformerAdditions.swift in Sources */,
 				D0E9C38219F6DC5B000D427D /* MTLValueTransformer.m in Sources */,
 				D0E9C38C19F6DC5B000D427D /* NSValueTransformer+MTLInversionAdditions.m in Sources */,
-				D0E9C38F19F6DC83000D427D /* EXTRuntimeExtensions.m in Sources */,
 				DBF0F3501C51C936002CD163 /* MTLValueTransformer.swift in Sources */,
-				D0E9C39019F6DC87000D427D /* EXTScope.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

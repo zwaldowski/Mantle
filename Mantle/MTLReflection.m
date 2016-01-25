@@ -7,44 +7,188 @@
 //
 
 #import "MTLReflection.h"
-#import <objc/runtime.h>
+@import ObjectiveC.runtime;
 
-SEL MTLSelectorWithKeyPattern(NSString *key, const char *suffix) {
+SEL MTLSelectorWithKeyPattern(const char *prefix, NSString *key, const char *suffix) {
+	NSUInteger prefixLength = prefix ? strlen(prefix) : 0;
 	NSUInteger keyLength = [key maximumLengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-	NSUInteger suffixLength = strlen(suffix);
+	NSUInteger suffixLength = suffix ? strlen(suffix) : 0;
 
-	char selector[keyLength + suffixLength + 1];
+	char selector[prefixLength + keyLength + suffixLength + 1];
+	memcpy(selector, prefix, prefixLength);
 
-	BOOL success = [key getBytes:selector maxLength:keyLength usedLength:&keyLength encoding:NSUTF8StringEncoding options:0 range:NSMakeRange(0, key.length) remainingRange:NULL];
-	if (!success) return NULL;
+	if (![key getBytes:selector + prefixLength maxLength:keyLength usedLength:&keyLength encoding:NSUTF8StringEncoding options:0 range:NSMakeRange(0, key.length) remainingRange:NULL]) {
+        return NULL;
+    }
 
-	memcpy(selector + keyLength, suffix, suffixLength);
-	selector[keyLength + suffixLength] = '\0';
+	if (prefixLength != 0) {
+		selector[prefixLength] = (char)toupper(selector[prefixLength]);
+	}
+
+	memcpy(selector + prefixLength + keyLength, suffix, suffixLength);
+	selector[prefixLength + keyLength + suffixLength] = '\0';
 
 	return sel_registerName(selector);
 }
 
-SEL MTLSelectorWithCapitalizedKeyPattern(const char *prefix, NSString *key, const char *suffix) {
-	NSUInteger prefixLength = strlen(prefix);
-	NSUInteger suffixLength = strlen(suffix);
+NSString *MTLTypeEncodingForProperty(Class cls, NSString *propertyName, Class *outClass) {
+	objc_property_t property = class_getProperty(cls, propertyName.UTF8String);
+	if (property == NULL) {
+		if (outClass != NULL) { *outClass = Nil; }
+		return nil;
+	}
 
-	NSString *initial = [key substringToIndex:1].uppercaseString;
-	NSUInteger initialLength = [initial maximumLengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+	char *typeString = property_copyAttributeValue(property, "T");
+	if (typeString == NULL) {
+		if (outClass != NULL) { *outClass = Nil; }
+		return nil;
+	}
 
-	NSString *rest = [key substringFromIndex:1];
-	NSUInteger restLength = [rest maximumLengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+	if (outClass == NULL) {
+		return [[NSString alloc] initWithBytesNoCopy:typeString length:strlen(typeString) encoding:NSUTF8StringEncoding freeWhenDone:YES];
+	}
 
-	char selector[prefixLength + initialLength + restLength + suffixLength + 1];
-	memcpy(selector, prefix, prefixLength);
+	NSString *ret = @(typeString);
+	do {
+		// parse "@\"NSString\""
+		const char *className = NULL;
+		char *decodeString = typeString;
 
-	BOOL success = [initial getBytes:selector + prefixLength maxLength:initialLength usedLength:&initialLength encoding:NSUTF8StringEncoding options:0 range:NSMakeRange(0, initial.length) remainingRange:NULL];
-	if (!success) return NULL;
+		// skip opening sigil
+		if (*decodeString != _C_ID) { break; }
+		++decodeString;
+		if (*decodeString != '"') { break; }
+		++decodeString;
 
-	success = [rest getBytes:selector + prefixLength + initialLength maxLength:restLength usedLength:&restLength encoding:NSUTF8StringEncoding options:0 range:NSMakeRange(0, rest.length) remainingRange:NULL];
-	if (!success) return NULL;
+		className = decodeString;
 
-	memcpy(selector + prefixLength + initialLength + restLength, suffix, suffixLength);
-	selector[prefixLength + initialLength + restLength + suffixLength] = '\0';
+		while (*decodeString != '"' && *decodeString != '\0') {
+			++decodeString;
+		}
+		*decodeString = '\0';
 
-	return sel_registerName(selector);
+		if (className == NULL) { break; }
+		*outClass = objc_getClass(className);
+	} while (0);
+
+	free(typeString);
+
+	return ret;
+}
+
+NS_INLINE SEL MTLPropertyAttributesGetSelector(const char *_Nonnull *_Nonnull next) {
+	const char *nextFlag = strchr(*next, ',');
+
+	if (nextFlag == NULL) {
+		// assume that the rest of the string is the selector
+		const char *selectorString = *next;
+		*next = "";
+
+		return sel_registerName(selectorString);
+	}
+
+	size_t selectorLength = nextFlag - *next;
+	if (!selectorLength) {
+		return NULL;
+	}
+
+	char selectorString[selectorLength + 1];
+	strncpy(selectorString, *next, selectorLength);
+	selectorString[selectorLength] = '\0';
+
+	*next = nextFlag;
+	return sel_getUid(selectorString);
+}
+
+NS_INLINE SEL MTLPropertyAttributesGetter(objc_property_t property) {
+	return sel_registerName(property_getName(property));
+}
+
+NS_INLINE SEL MTLPropertyAttributesSetter(NSString *key) {
+	return MTLSelectorWithKeyPattern("set", key, ":");
+}
+
+mtl_property_attr_t MTLAttributesForProperty(Class cls, NSString *key) {
+	objc_property_t property = class_getProperty(cls, key.UTF8String);
+	if (property == NULL) { return 0; }
+
+	const char *next = property_getAttributes(property);
+	if (next == NULL || *next != 'T') { return 0; }
+
+	// skip past any junk before the first flag
+	if (*next != '\0') {
+		next = strchr(next, ',');
+	}
+
+	mtl_property_attr_t ret = 0;
+	BOOL explicitGetter = NO, explicitSetter = NO;
+
+    while (next && *next == ',') {
+        char flag = next[1];
+        next += 2;
+
+        switch (flag) {
+        case '\0':
+            break;
+
+        case 'R':
+			ret |= mtl_property_readonly;
+            break;
+
+		case 'G': {
+			SEL getter = MTLPropertyAttributesGetSelector(&next);
+			if (getter != NULL && class_respondsToSelector(cls, getter)) {
+				explicitGetter = YES;
+				ret |= mtl_property_hasGetter;
+			}
+			break;
+		}
+
+        case 'S': {
+			SEL setter = MTLPropertyAttributesGetSelector(&next);
+			if (setter != NULL && class_respondsToSelector(cls, setter)) {
+				explicitSetter = YES;
+				ret |= mtl_property_hasSetter;
+			}
+			break;
+		}
+
+        case 'D':
+			ret |= mtl_property_dynamic;
+			ret &= ~mtl_property_hasIvar;
+            break;
+
+        case 'V':
+            // assume that the rest of the string (if present) is the ivar name
+            if (*next != '\0') {
+				ret |= mtl_property_hasIvar;
+                next = "";
+            }
+            break;
+
+        case 'W':
+			ret |= mtl_property_weak;
+            break;
+
+        default:
+			break;
+        }
+    }
+
+	if (!explicitGetter) {
+		// use the property name as the getter by default
+		SEL getter = MTLPropertyAttributesGetter(property);
+		if (getter != NULL && class_respondsToSelector(cls, getter)) {
+			ret |= mtl_property_hasGetter;
+		}
+	}
+
+	if (!explicitSetter) {
+		SEL setter = MTLPropertyAttributesSetter(key);
+		if (setter != NULL && class_respondsToSelector(cls, setter)) {
+			ret |= mtl_property_hasSetter;
+		}
+	}
+
+    return ret;
 }

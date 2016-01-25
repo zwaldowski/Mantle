@@ -6,13 +6,9 @@
 //  Copyright (c) 2013 GitHub. All rights reserved.
 //
 
-#import <objc/runtime.h>
-
-#import "NSDictionary+MTLJSONKeyPath.h"
-
-#import <Mantle/EXTRuntimeExtensions.h>
-#import <Mantle/EXTScope.h>
 #import "MTLJSONAdapter.h"
+@import ObjectiveC;
+#import "NSDictionary+MTLJSONKeyPath.h"
 #import "MTLModel.h"
 #import "MTLTransformerErrorHandling.h"
 #import "MTLReflection.h"
@@ -378,11 +374,10 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 	NSMutableDictionary *result = [NSMutableDictionary dictionary];
 
 	for (NSString *key in [modelClass propertyKeys]) {
-		SEL selector = MTLSelectorWithKeyPattern(key, "JSONTransformer");
+		SEL selector = MTLSelectorWithKeyPattern("", key, "JSONTransformer");
 		if ([modelClass respondsToSelector:selector]) {
-			IMP imp = [modelClass methodForSelector:selector];
-			NSValueTransformer * (*function)(id, SEL) = (__typeof__(function))imp;
-			NSValueTransformer *transformer = function(modelClass, selector);
+			NSValueTransformer * (*transformerMsg)(id, SEL) = (__typeof__(transformerMsg))objc_msgSend;
+			NSValueTransformer *transformer = transformerMsg(modelClass, selector);
 
 			if (transformer != nil) result[key] = transformer;
 
@@ -398,36 +393,35 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 			}
 		}
 
-		objc_property_t property = class_getProperty(modelClass, key.UTF8String);
-
-		if (property == NULL) continue;
-
-		mtl_propertyAttributes *attributes = mtl_copyPropertyAttributes(property);
-		@onExit {
-			free(attributes);
-		};
-
-		NSValueTransformer *transformer = nil;
-
-		if (*(attributes->type) == *(@encode(id))) {
-			Class propertyClass = attributes->objectClass;
-
-			if (propertyClass != nil) {
-				transformer = [self transformerForModelPropertiesOfClass:propertyClass];
-			}
-
-
-			// For user-defined MTLModel, try parse it with dictionaryTransformer.
-			if (nil == transformer && [propertyClass conformsToProtocol:@protocol(MTLJSONSerializing)]) {
-				transformer = [self dictionaryTransformerWithModelClass:propertyClass];
-			}
-			
-			if (transformer == nil) transformer = [NSValueTransformer mtl_validatingTransformerForClass:propertyClass ?: NSObject.class];
-		} else {
-			transformer = [self transformerForModelPropertiesOfObjCType:attributes->type] ?: [NSValueTransformer mtl_validatingTransformerForClass:NSValue.class];
+		Class propertyClass = Nil;
+		NSString *typeEncoding = MTLTypeEncodingForProperty(modelClass, key, &propertyClass);
+		if (typeEncoding == nil) {
+			continue;
 		}
 
-		if (transformer != nil) result[key] = transformer;
+		NSValueTransformer *transformer = nil;
+		uint8_t firstCodepoint;
+
+		if (propertyClass != Nil) {
+			transformer = [self transformerForModelPropertiesOfClass:propertyClass];
+
+			// For user-defined MTLModel, try parse it with dictionaryTransformer.
+			if (transformer == nil && [propertyClass conformsToProtocol:@protocol(MTLJSONSerializing)]) {
+				transformer = [self dictionaryTransformerWithModelClass:propertyClass];
+			}
+
+			if (transformer == nil) {
+				transformer = [NSValueTransformer mtl_validatingTransformerForClass:propertyClass];
+			}
+		} else if ([typeEncoding getBytes:&firstCodepoint maxLength:1 usedLength:NULL encoding:NSUTF8StringEncoding options:0 range:NSMakeRange(0, typeEncoding.length) remainingRange:NULL] && firstCodepoint == _C_ID) {
+			transformer = [NSValueTransformer mtl_validatingTransformerForClass:NSObject.class];
+		} else {
+			transformer = [self transformerForModelPropertiesOfObjCType:typeEncoding.UTF8String] ?: [NSValueTransformer mtl_validatingTransformerForClass:NSValue.class];
+		}
+
+		if (transformer != nil) {
+			result[key] = transformer;
+		}
 	}
 
 	return result;
@@ -459,12 +453,11 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 + (NSValueTransformer *)transformerForModelPropertiesOfClass:(Class)modelClass {
 	NSParameterAssert(modelClass != nil);
 
-	SEL selector = MTLSelectorWithKeyPattern(NSStringFromClass(modelClass), "JSONTransformer");
+	SEL selector = MTLSelectorWithKeyPattern("", NSStringFromClass(modelClass), "JSONTransformer");
 	if (![self respondsToSelector:selector]) return nil;
 	
-	IMP imp = [self methodForSelector:selector];
-	NSValueTransformer * (*function)(id, SEL) = (__typeof__(function))imp;
-	NSValueTransformer *result = function(self, selector);
+	NSValueTransformer *(*transformerMsg)(id, SEL) = (__typeof__(transformerMsg))objc_msgSend;
+	NSValueTransformer *result = transformerMsg(self, selector);
 	
 	return result;
 }

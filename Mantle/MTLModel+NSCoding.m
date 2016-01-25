@@ -7,9 +7,8 @@
 //
 
 #import "MTLModel+NSCoding.h"
-#import <Mantle/EXTRuntimeExtensions.h>
-#import <Mantle/EXTScope.h>
 #import "MTLReflection.h"
+@import ObjectiveC;
 
 // Used in archives to store the modelVersion of the archived instance.
 static NSString * const MTLModelVersionKey = @"MTLModelVersion";
@@ -55,15 +54,7 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 	NSMutableDictionary *behaviors = [[NSMutableDictionary alloc] initWithCapacity:propertyKeys.count];
 
 	for (NSString *key in propertyKeys) {
-		objc_property_t property = class_getProperty(self, key.UTF8String);
-		NSAssert(property != NULL, @"Could not find property \"%@\" on %@", key, self);
-
-		mtl_propertyAttributes *attributes = mtl_copyPropertyAttributes(property);
-		@onExit {
-			free(attributes);
-		};
-
-		MTLModelEncodingBehavior behavior = (attributes->weak ? MTLModelEncodingBehaviorConditional : MTLModelEncodingBehaviorUnconditional);
+		MTLModelEncodingBehavior behavior = MTLPropertyIsWeak(self, key) ? MTLModelEncodingBehaviorConditional : MTLModelEncodingBehaviorUnconditional;
 		behaviors[key] = @(behavior);
 	}
 
@@ -82,24 +73,17 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 	NSMutableDictionary *allowedClasses = [[NSMutableDictionary alloc] initWithCapacity:propertyKeys.count];
 
 	for (NSString *key in propertyKeys) {
-		objc_property_t property = class_getProperty(self, key.UTF8String);
-		NSAssert(property != NULL, @"Could not find property \"%@\" on %@", key, self);
-
-		mtl_propertyAttributes *attributes = mtl_copyPropertyAttributes(property);
-		@onExit {
-			free(attributes);
-		};
-
-		// If the property is not of object or class type, assume that it's
-		// a primitive which would be boxed into an NSValue.
-		if (attributes->type[0] != '@' && attributes->type[0] != '#') {
-			allowedClasses[key] = @[ NSValue.class ];
-			continue;
-		}
+		Class objectClass = Nil;
+		NSString *propertyType = MTLTypeEncodingForProperty(self, key, &objectClass);
+		uint8_t firstCodepoint;
 
 		// Omit this property from the dictionary if its class isn't known.
-		if (attributes->objectClass != nil) {
-			allowedClasses[key] = @[ attributes->objectClass ];
+		if (objectClass != Nil) {
+			allowedClasses[key] = @[ objectClass ];
+		} else if ([propertyType getBytes:&firstCodepoint maxLength:1 usedLength:NULL encoding:NSUTF8StringEncoding options:0 range:NSMakeRange(0, propertyType.length) remainingRange:NULL] && firstCodepoint != _C_ID && firstCodepoint != _C_CLASS) {
+			// If the property is not of object or class type, assume that it's
+			// a primitive which would be boxed into an NSValue.
+			allowedClasses[key] = @[ NSValue.class ];
 		}
 	}
 
@@ -114,13 +98,10 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 	NSParameterAssert(key != nil);
 	NSParameterAssert(coder != nil);
 
-	SEL selector = MTLSelectorWithCapitalizedKeyPattern("decode", key, "WithCoder:modelVersion:");
+	SEL selector = MTLSelectorWithKeyPattern("decode", key, "WithCoder:modelVersion:");
 	if ([self respondsToSelector:selector]) {
-		IMP imp = [self methodForSelector:selector];
-		id (*function)(id, SEL, NSCoder *, NSUInteger) = (__typeof__(function))imp;
-		id result = function(self, selector, coder, modelVersion);
-		
-		return result;
+		id (*decodeMsg)(id, SEL, NSCoder *, NSUInteger) = (__typeof__(decodeMsg))objc_msgSend;
+		return decodeMsg(self, selector, coder, modelVersion);
 	}
 
 	@try {
