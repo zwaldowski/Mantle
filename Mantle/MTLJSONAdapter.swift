@@ -17,6 +17,10 @@ public enum MTLJSONAdapterError: ErrorType, CustomStringConvertible {
 	/// does not actually exist in +propertyKeys.
 	case InvalidJSONMapping
 
+	/// The `type` does not implement an Objective-C property that is key-value
+	/// coding compliant property `key`.
+	case UndefinedKey(String, type: MTLJSONSerializing.Type)
+
 	/// An exception was thrown and caught.
 	case ExceptionThrown(NSException)
 
@@ -28,6 +32,8 @@ public enum MTLJSONAdapterError: ErrorType, CustomStringConvertible {
 			return "The provided JSON dictionary is not valid."
 		case .InvalidJSONMapping:
 			return "The model's implementation of MTLModelProtocol.Type.JSONKeyPathsByPropertyKey() included a key which does not actually exist in its property keys."
+		case .UndefinedKey(let key, let type):
+			return "The class \"\(type)\" is not key value coding-compliant for \"\(key)\"."
 		case .ExceptionThrown(let exception):
 			return "Caught exception parsing JSON key path: \(exception)"
 		}
@@ -36,7 +42,7 @@ public enum MTLJSONAdapterError: ErrorType, CustomStringConvertible {
 
 private extension MTLJSONAdapterError {
 
-	init(error: NSError) {
+	init!(jsonError error: NSError) {
 		switch error.code {
 		case MTLJSONAdapterErrorNoClassFound:
 			self = .NoClassFound
@@ -45,9 +51,26 @@ private extension MTLJSONAdapterError {
 		case MTLJSONAdapterErrorInvalidJSONMapping:
 			self = .InvalidJSONMapping
 		case MTLJSONAdapterErrorExceptionThrown:
-			self = .ExceptionThrown(error.userInfo[MTLJSONAdapterThrownExceptionErrorKey] as! NSException)
+			let exception = error.userInfo[MTLJSONAdapterThrownExceptionErrorKey] as! NSException
+			if exception.name == NSUndefinedKeyException,
+				let key = exception.userInfo?["NSUnknownUserInfoKey"] as? String,
+				type = exception.userInfo?["NSTargetObjectUserInfoKey"]?.dynamicType as? MTLJSONSerializing.Type {
+				self = .UndefinedKey(key, type: type)
+			} else {
+				self = .ExceptionThrown(exception)
+			}
 		default:
-			fatalError("Unexpected MTLJSONAdapterError")
+			return nil
+		}
+	}
+
+	init!(modelError error: NSError) {
+		switch error.code {
+		case 1:
+			let exception = error.userInfo[__MTLModelThrownExceptionErrorKey] as! NSException
+			self = .ExceptionThrown(exception)
+		default:
+			return nil
 		}
 	}
 
@@ -57,7 +80,9 @@ private func bridgeFromObjCError<T>(@autoclosure body: () throws -> T) throws ->
 	do {
 		return try body()
 	} catch let error as NSError where error.domain == MTLJSONAdapterErrorDomain {
-		throw MTLJSONAdapterError(error: error)
+		throw MTLJSONAdapterError(jsonError: error)
+	} catch let error as NSError where error.domain == "MTLModelErrorDomain" {
+		throw MTLJSONAdapterError(modelError: error)
 	}
 }
 

@@ -17,7 +17,7 @@ static NSString * const MTLModelErrorDomain = @"MTLModelErrorDomain";
 static const NSInteger MTLModelErrorExceptionThrown = 1;
 
 // Associated with the NSException that was caught.
-static NSString * const MTLModelThrownExceptionErrorKey = @"MTLModelThrownException";
+NSString * const MTLModelThrownExceptionErrorKey = @"MTLModelThrownException";
 
 @implementation NSError (MTLModelException)
 

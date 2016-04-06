@@ -28,6 +28,9 @@ typedef NS_ENUM(NSInteger, MTLPropertyStorage) {
     MTLPropertyStoragePermanent,
 };
 
+/// Associated with an NSException that was caught.
+extern NSString * const MTLModelThrownExceptionErrorKey NS_REFINED_FOR_SWIFT;
+
 /// This protocol defines the minimal interface that classes need to implement to
 /// interact with Mantle adapters.
 ///
