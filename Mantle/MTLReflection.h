@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MTLDefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a selector, or NULL if the input strings cannot form a valid
 /// selector.
-extern SEL _Nullable MTLSelectorWithKeyPattern(NSString *key, const char *suffix) __attribute__((pure, visibility("hidden")));
+MANTLE_PRIVATE MANTLE_PURE
+SEL _Nullable MTLSelectorWithKeyPattern(NSString *key, const char *suffix);
 
 /// Creates a selector from a key and a constant prefix and suffix.
 ///
@@ -30,6 +32,17 @@ extern SEL _Nullable MTLSelectorWithKeyPattern(NSString *key, const char *suffix
 ///
 /// Returns a selector, or NULL if the input strings cannot form a valid
 /// selector.
-extern SEL _Nullable MTLSelectorWithCapitalizedKeyPattern(const char *prefix, NSString *key, const char *suffix) __attribute__((pure, visibility("hidden")));
+MANTLE_PRIVATE MANTLE_PURE
+SEL _Nullable MTLSelectorWithCapitalizedKeyPattern(const char *prefix, NSString *key, const char *suffix);
+
+#ifdef __APPLE__
+MANTLE_PRIVATE
+BOOL MTLIsDebugging(void);
+#else
+NS_INLINE
+BOOL MTLIsDebugging(void) {
+	return NO;
+}
+#endif
 
 NS_ASSUME_NONNULL_END
