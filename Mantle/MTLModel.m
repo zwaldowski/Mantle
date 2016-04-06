@@ -54,15 +54,13 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 		NSLog(@"*** Caught exception setting key \"%@\" : %@", key, ex);
 
 		// Fail fast in Debug builds.
-		#if DEBUG
-		@throw ex;
-		#else
-		if (error != NULL) {
+		if (MTLIsDebugging()) {
+			@throw ex;
+		} else if (error != NULL) {
 			*error = [NSError mtl_modelErrorWithException:ex];
 		}
 
 		return NO;
-		#endif
 	}
 }
 

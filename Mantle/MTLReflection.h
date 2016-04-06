@@ -92,4 +92,14 @@ BOOL MTLPropertyIsComputed(mtl_property_attr_t attr) {
 	return (attr & mtl_property_readonly) != 0 && (attr & mtl_property_hasIvar) == 0;
 }
 
+#ifdef __APPLE__
+MANTLE_PRIVATE
+BOOL MTLIsDebugging(void);
+#else
+NS_INLINE
+BOOL MTLIsDebugging(void) {
+	return NO;
+}
+#endif
+
 NS_ASSUME_NONNULL_END

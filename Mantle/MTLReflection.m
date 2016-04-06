@@ -192,3 +192,17 @@ mtl_property_attr_t MTLAttributesForProperty(Class cls, NSString *key) {
 
     return ret;
 }
+
+#ifdef __APPLE__
+#import <libproc.h>
+
+BOOL MTLIsDebugging(void) {
+	struct proc_bsdshortinfo info = {};
+	int size = sizeof(struct proc_bsdshortinfo);
+	if (proc_pidinfo(getpid(), PROC_PIDT_SHORTBSDINFO, 0, &info, size) == PROC_PIDT_SHORTBSDINFO_SIZE) {
+		return (info.pbsi_flags & PROC_FLAG_TRACED);
+	} else {
+		return NO;
+	}
+}
+#endif
