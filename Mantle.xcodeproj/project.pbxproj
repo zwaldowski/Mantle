@@ -117,6 +117,8 @@
 		DBF0F3441C518D40002CD163 /* MTLJSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F3421C518D40002CD163 /* MTLJSONAdapter.swift */; };
 		DBF0F3491C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F3481C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift */; };
 		DBF0F34A1C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F3481C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift */; };
+		DBF0F3461C519C58002CD163 /* Dictionary+MTLManipulationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F3451C519C58002CD163 /* Dictionary+MTLManipulationAdditions.swift */; };
+		DBF0F3471C519CA9002CD163 /* Dictionary+MTLManipulationAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F3451C519C58002CD163 /* Dictionary+MTLManipulationAdditions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -326,6 +328,7 @@
 		DB2768241CE2B21F0050A7A7 /* MTLDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLDefines.h; sourceTree = "<group>"; };
 		DBF0F3421C518D40002CD163 /* MTLJSONAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTLJSONAdapter.swift; sourceTree = "<group>"; };
 		DBF0F3481C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MTLModel+MTLMappingAdditions.swift"; sourceTree = "<group>"; };
+		DBF0F3451C519C58002CD163 /* Dictionary+MTLManipulationAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+MTLManipulationAdditions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -508,6 +511,7 @@
 				54803A31178829A700011B39 /* NSError+MTLModelException.m */,
 				D0C27D0816110973002FE587 /* NSDictionary+MTLManipulationAdditions.h */,
 				D0C27D0916110973002FE587 /* NSDictionary+MTLManipulationAdditions.m */,
+				DBF0F3451C519C58002CD163 /* Dictionary+MTLManipulationAdditions.swift */,
 				547F78531822BCFD00BBAB7B /* NSDictionary+MTLMappingAdditions.h */,
 				547F78541822BCFD00BBAB7B /* NSDictionary+MTLMappingAdditions.m */,
 				DBF0F3481C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift */,
@@ -956,6 +960,7 @@
 				D0760E7915FFBF330060F550 /* MTLModel.m in Sources */,
 				D08B5AAF16002694001FE685 /* MTLValueTransformer.m in Sources */,
 				88080C19160A706900CCABF2 /* NSArray+MTLManipulationAdditions.m in Sources */,
+				DBF0F3461C519C58002CD163 /* Dictionary+MTLManipulationAdditions.swift in Sources */,
 				D0C27D0B16110973002FE587 /* NSDictionary+MTLManipulationAdditions.m in Sources */,
 				D0F1174A1614C5600092520B /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */,
 				D05317731A168D3D00A5FBE2 /* MTLTransformerErrorHandling.m in Sources */,
@@ -1004,6 +1009,7 @@
 				D0E9C38619F6DC5B000D427D /* NSError+MTLModelException.m in Sources */,
 				D0E9C38E19F6DC5B000D427D /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */,
 				D05317781A168D6D00A5FBE2 /* NSDictionary+MTLMappingAdditions.m in Sources */,
+				DBF0F3471C519CA9002CD163 /* Dictionary+MTLManipulationAdditions.swift in Sources */,
 				D0E9C37C19F6DC5B000D427D /* MTLReflection.m in Sources */,
 				D05317791A168D6D00A5FBE2 /* NSDictionary+MTLJSONKeyPath.m in Sources */,
 				D0E9C37A19F6DC5B000D427D /* MTLModel+NSCoding.m in Sources */,
