@@ -26,22 +26,7 @@ typedef NS_ENUM(NSInteger, MTLModelEncodingBehavior) {
 NS_ASSUME_NONNULL_BEGIN
 
 /// Implements default archiving and unarchiving behaviors for MTLModel.
-@interface MTLModel (NSCoding) <NSCoding>
-
-/// Initializes the receiver from an archive.
-///
-/// This will decode the original +modelVersion of the archived object, then
-/// invoke -decodeValueForKey:withCoder:modelVersion: for each of the receiver's
-/// +propertyKeys.
-///
-/// Returns an initialized model object, or nil if a decoding error occurred.
-- (nullable instancetype)initWithCoder:(NSCoder *)coder;
-
-/// Archives the receiver using the given coder.
-///
-/// This will encode the receiver's +modelVersion, then the receiver's properties
-/// according to the behaviors specified in +encodingBehaviorsByPropertyKey.
-- (void)encodeWithCoder:(NSCoder *)coder;
+@interface MTLModel (NSCoding)
 
 /// Determines how the +propertyKeys of the class are encoded into an archive.
 /// The values of this dictionary should be boxed MTLModelEncodingBehavior

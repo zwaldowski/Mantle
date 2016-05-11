@@ -38,6 +38,8 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 	}
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 @implementation MTLModel (NSCoding)
 
 #pragma mark Versioning
@@ -232,6 +234,7 @@ static void verifyAllowedClassesByPropertyKey(Class modelClass) {
 }
 
 @end
+#pragma clang diagnostic pop
 
 @implementation MTLModel (OldArchiveSupport)
 
