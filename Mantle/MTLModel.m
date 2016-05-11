@@ -91,6 +91,10 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 
 @end
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprotocol"
+// See MTLModel+NSCoding.
+
 @implementation MTLModel
 
 #pragma mark Lifecycle
@@ -332,3 +336,4 @@ static BOOL MTLValidateAndSetValue(id obj, NSString *key, id value, BOOL forceUp
 }
 
 @end
+#pragma clang diagnostic pop

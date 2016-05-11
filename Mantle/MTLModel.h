@@ -101,26 +101,7 @@ typedef NS_ENUM(NSInteger, MTLPropertyStorage) {
 ///
 /// The default implementations of <NSCopying>, -hash, and -isEqual: make use of
 /// the +propertyKeys method.
-@interface MTLModel : NSObject <MTLModel>
-
-/// Initializes the receiver using key-value coding, setting the keys and values
-/// in the given dictionary.
-///
-/// dictionaryValue - Property keys and values to set on the receiver. Any NSNull
-///                   values will be converted to nil before being used. KVC
-///                   validation methods will automatically be invoked for all of
-///                   the properties given. If nil, this method is equivalent to
-///                   -init.
-/// error           - If not NULL, this may be set to any error that occurs
-///                   (like a KVC validation error).
-///
-/// Returns an initialized model object, or nil if validation failed.
-- (nullable instancetype)initWithDictionary:(nullable NSDictionary<NSString *, id> *)dictionaryValue error:(NSError **)error;
-
-/// Initializes the receiver with default values.
-///
-/// This is the designated initializer for this class.
-- (instancetype)init;
+@interface MTLModel : NSObject <MTLModel, NSSecureCoding>
 
 /// By default, this method looks for a `-merge<Key>FromModel:` method on the
 /// receiver, and invokes it if found. If not found, and `model` is not nil, the
