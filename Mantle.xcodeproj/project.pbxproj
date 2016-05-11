@@ -111,6 +111,8 @@
 		DB2767F71CE2AB1B0050A7A7 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2767E51CE2AB0B0050A7A7 /* Quick.framework */; };
 		DB2767F81CE2AB290050A7A7 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2767D01CE2AB0B0050A7A7 /* Nimble.framework */; };
 		DB2767F91CE2AB290050A7A7 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2767EB1CE2AB0B0050A7A7 /* Quick.framework */; };
+		DB2768251CE2B21F0050A7A7 /* MTLDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2768241CE2B21F0050A7A7 /* MTLDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DB2768261CE2B21F0050A7A7 /* MTLDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2768241CE2B21F0050A7A7 /* MTLDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -317,6 +319,7 @@
 		D0F1174C1614C8000092520B /* MTLPredefinedTransformerAdditionsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTLPredefinedTransformerAdditionsSpec.m; sourceTree = "<group>"; };
 		DB2767C31CE2AB0A0050A7A7 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = Carthage/Checkouts/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
 		DB2767C61CE2AB0B0050A7A7 /* Quick.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Quick.xcodeproj; path = Carthage/Checkouts/Quick/Quick.xcodeproj; sourceTree = "<group>"; };
+		DB2768241CE2B21F0050A7A7 /* MTLDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLDefines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				D042FC4C15F72B23004E8054 /* Mantle.h */,
+				DB2768241CE2B21F0050A7A7 /* MTLDefines.h */,
 				D0760E7015FFBF020060F550 /* Modules */,
 				D090E62515F730B2005282F9 /* Extensions */,
 				D042FC4615F72B23004E8054 /* Supporting Files */,
@@ -639,6 +643,7 @@
 				1ED5B5D0163A4E3C0072668E /* NSObject+MTLComparisonAdditions.h in Headers */,
 				A18397E41BA341C900AB37BA /* EXTRuntimeExtensions.h in Headers */,
 				D01BD09D16CB432D00EC95C7 /* MTLJSONAdapter.h in Headers */,
+				DB2768251CE2B21F0050A7A7 /* MTLDefines.h in Headers */,
 				D05317721A168D3D00A5FBE2 /* MTLTransformerErrorHandling.h in Headers */,
 				D01BD0AF16CB52E800EC95C7 /* MTLModel+NSCoding.h in Headers */,
 				A18397E81BA341DC00AB37BA /* metamacros.h in Headers */,
@@ -662,6 +667,7 @@
 				D0E9C38D19F6DC5B000D427D /* NSValueTransformer+MTLPredefinedTransformerAdditions.h in Headers */,
 				A18397E31BA341C500AB37BA /* EXTRuntimeExtensions.h in Headers */,
 				D0E9C37D19F6DC5B000D427D /* MTLJSONAdapter.h in Headers */,
+				DB2768261CE2B21F0050A7A7 /* MTLDefines.h in Headers */,
 				D0E9C37719F6DC5B000D427D /* MTLModel.h in Headers */,
 				D0E9C38719F6DC5B000D427D /* NSDictionary+MTLManipulationAdditions.h in Headers */,
 				A18397E71BA341D900AB37BA /* metamacros.h in Headers */,
