@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a dictionary that maps all properties of the given class to
 /// themselves.
-+ (NSDictionary<NSString *, NSString *> *)mtl_identityPropertyMapWithModel:(Class<MTLModel>)modelClass;
++ (NSDictionary<NSString *, NSString *> *)mtl_identityPropertyMapWithModel:(Class<MTLModel>)modelClass NS_SWIFT_UNAVAILABLE("Use MTLModelProtocol.Type.identityPropertyKeyPaths()");
 
 @end
 

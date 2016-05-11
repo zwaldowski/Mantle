@@ -15,6 +15,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// A MTLModel object that supports being parsed from and serialized to JSON.
+NS_REFINED_FOR_SWIFT
 @protocol MTLJSONSerializing <MTLModel>
 @required
 
@@ -51,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Returns a dictionary mapping property keys to one or multiple JSON key paths
 /// (as strings or arrays of strings).
-+ (NSDictionary<NSString *, id> *)JSONKeyPathsByPropertyKey;
++ (NSDictionary<NSString *, id> *)JSONKeyPathsByPropertyKey NS_SWIFT_UNAVAILABLE("Use MTLJSONSerializing.JSONKeyPaths static member");
 
 @optional
 
@@ -100,6 +101,7 @@ extern const NSInteger MTLJSONAdapterErrorExceptionThrown;
 extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 
 /// Converts a MTLModel object to and from a JSON dictionary.
+NS_REFINED_FOR_SWIFT
 @interface MTLJSONAdapter<__covariant Model: id<MTLJSONSerializing>> : NSObject
 
 /// Attempts to parse a JSON dictionary into a model object.
@@ -115,7 +117,7 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///
 /// Returns an instance of `modelClass` upon success, or nil if a parsing error
 /// occurred.
-+ (nullable __kindof Model)modelOfClass:(Class)modelClass fromJSONDictionary:(NSDictionary<NSString *, id> *)JSONDictionary error:(NSError **)error;
++ (nullable __kindof Model)modelOfClass:(Class)modelClass fromJSONDictionary:(NSDictionary<NSString *, id> *)JSONDictionary error:(NSError **)error NS_REFINED_FOR_SWIFT;
 
 /// Attempts to parse an array of JSON dictionary objects into a model objects
 /// of a specific class.
@@ -132,7 +134,7 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///
 /// Returns an array of `modelClass` instances upon success, or nil if a parsing
 /// error occurred.
-+ (nullable NSArray<__kindof Model> *)modelsOfClass:(Class)modelClass fromJSONArray:(NSArray<NSDictionary<NSString *, id> *> *)JSONArray error:(NSError **)error;
++ (nullable NSArray<__kindof Model> *)modelsOfClass:(Class)modelClass fromJSONArray:(NSArray<NSDictionary<NSString *, id> *> *)JSONArray error:(NSError **)error NS_REFINED_FOR_SWIFT;
 
 /// Converts a model into a JSON representation.
 ///
@@ -142,7 +144,7 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///         serializing.
 ///
 /// Returns a JSON dictionary, or nil if a serialization error occurred.
-+ (nullable NSDictionary<NSString *, id> *)JSONDictionaryFromModel:(Model)model error:(NSError **)error;
++ (nullable NSDictionary<NSString *, id> *)JSONDictionaryFromModel:(Model)model error:(NSError **)error NS_REFINED_FOR_SWIFT;
 
 /// Converts a array of models into a JSON representation.
 ///
@@ -153,7 +155,10 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///
 /// Returns a JSON array, or nil if a serialization error occurred for any
 /// model.
-+ (nullable NSArray<NSDictionary<NSString *, id> *> *)JSONArrayFromModels:(NSArray<Model> *)models error:(NSError **)error;
++ (nullable NSArray<NSDictionary<NSString *, id> *> *)JSONArrayFromModels:(NSArray<Model> *)models error:(NSError **)error NS_REFINED_FOR_SWIFT;
+
+/// This initializer may not be used.
+- (instancetype)init NS_UNAVAILABLE NS_SWIFT_NAME(init(unavailable:));
 
 /// Initializes the receiver with a given model class.
 ///
@@ -162,7 +167,7 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///              argument must not be nil.
 ///
 /// Returns an initialized adapter.
-- (instancetype)initWithModelClass:(Class)modelClass;
+- (instancetype)initWithModelClass:(Class)modelClass NS_REFINED_FOR_SWIFT;
 
 /// Deserializes a model from a JSON dictionary.
 ///
@@ -177,7 +182,7 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///
 /// Returns a model object, or nil if a deserialization error occurred or the
 /// model did not validate successfully.
-- (nullable __kindof Model)modelFromJSONDictionary:(NSDictionary<NSString *, id> *)JSONDictionary error:(NSError **)error;
+- (nullable __kindof Model)modelFromJSONDictionary:(NSDictionary<NSString *, id> *)JSONDictionary error:(NSError **)error NS_REFINED_FOR_SWIFT;
 
 /// Serializes a model into JSON.
 ///
@@ -187,7 +192,7 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///         serializing.
 ///
 /// Returns a model object, or nil if a serialization error occurred.
-- (nullable NSDictionary<NSString *, id> *)JSONDictionaryFromModel:(Model)model error:(NSError **)error;
+- (nullable NSDictionary<NSString *, id> *)JSONDictionaryFromModel:(Model)model error:(NSError **)error NS_REFINED_FOR_SWIFT;
 
 /// Filters the property keys used to serialize a given model.
 ///
@@ -202,7 +207,7 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 ///
 /// Returns a subset of propertyKeys that should be serialized for a given
 /// model.
-- (NSSet<NSString *> *)serializablePropertyKeys:(NSSet<NSString *> *)propertyKeys forModel:(Model)model;
+- (NSSet<NSString *> *)serializablePropertyKeys:(NSSet<NSString *> *)propertyKeys forModel:(Model)model NS_REFINED_FOR_SWIFT;
 
 /// An optional value transformer that should be used for properties of the given
 /// class.
@@ -271,17 +276,17 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 
 @interface MTLJSONAdapter (Deprecated)
 
-@property (nonatomic, strong, readonly) id<MTLJSONSerializing> model __attribute__((unavailable("Replaced by -modelFromJSONDictionary:error:")));
+@property (nonatomic, strong, readonly) id<MTLJSONSerializing> model MANTLE_UNAVAILABLE("Replaced by -modelFromJSONDictionary:error:");
 
-+ (nullable NSArray<NSDictionary<NSString *, id> *> *)JSONArrayFromModels:(NSArray *)models __attribute__((deprecated("Replaced by +JSONArrayFromModels:error:")));
++ (nullable NSArray<NSDictionary<NSString *, id> *> *)JSONArrayFromModels:(NSArray *)models MANTLE_DEPRECATED("Replaced by +JSONArrayFromModels:error:");
 
-+ (nullable NSDictionary<NSString *, id> *)JSONDictionaryFromModel:(MTLModel<MTLJSONSerializing> *)model __attribute__((deprecated("Replaced by +JSONDictionaryFromModel:error:")));
++ (nullable NSDictionary<NSString *, id> *)JSONDictionaryFromModel:(MTLModel<MTLJSONSerializing> *)model MANTLE_DEPRECATED("Replaced by +JSONDictionaryFromModel:error:");
 
-- (nullable NSDictionary<NSString *, id> *)JSONDictionary __attribute__((unavailable("Replaced by -JSONDictionaryFromModel:error:")));
-- (null_unspecified NSString *)JSONKeyPathForPropertyKey:(NSString *)key __attribute__((unavailable("Replaced by -serializablePropertyKeys:forModel:")));
-- (nullable id)initWithJSONDictionary:(NSDictionary<NSString *, id> *)JSONDictionary modelClass:(Class)modelClass error:(NSError **)error __attribute__((unavailable("Replaced by -initWithModelClass:")));
-- (nullable id)initWithModel:(id<MTLJSONSerializing>)model __attribute__((unavailable("Replaced by -initWithModelClass:"))) NS_SWIFT_UNAVAILABLE("Replaced by -initWithModelClass:");
-- (nullable NSDictionary<NSString *, id> *)serializeToJSONDictionary:(NSError **)error __attribute__((unavailable("Replaced by -JSONDictionaryFromModel:error:"))) NS_SWIFT_UNAVAILABLE("Replaced by -JSONDictionaryFromModel:error:");
+- (nullable NSDictionary<NSString *, id> *)JSONDictionary MANTLE_UNAVAILABLE("Replaced by -JSONDictionaryFromModel:error:");
+- (null_unspecified NSString *)JSONKeyPathForPropertyKey:(NSString *)key MANTLE_UNAVAILABLE("Replaced by -serializablePropertyKeys:forModel:");
+- (nullable id)initWithJSONDictionary:(NSDictionary<NSString *, id> *)JSONDictionary modelClass:(Class)modelClass error:(NSError **)error MANTLE_UNAVAILABLE("Replaced by -initWithModelClass:");
+- (nullable id)initWithModel:(id<MTLJSONSerializing>)model MANTLE_UNAVAILABLE("Replaced by -initWithModelClass:");
+- (nullable NSDictionary<NSString *, id> *)serializeToJSONDictionary:(NSError **)error MANTLE_UNAVAILABLE("Replaced by -JSONDictionaryFromModel:error:");
 
 @end
 

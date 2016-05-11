@@ -32,6 +32,10 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 
 @interface MTLJSONAdapter ()
 
+// "Real" designated initializer with JSONKeyPathsByPropertyKey override for the
+// benefit of Swift.
+- (instancetype)initWithModelClass:(Class)modelClass _opaque_JSONKeyPathsByPropertyKey:(id)JSONKeyPathsByPropertyKey NS_DESIGNATED_INITIALIZER;
+
 // The MTLModel subclass being parsed, or the class of `model` if parsing has
 // completed.
 @property (nonatomic, strong, readonly) Class modelClass;
@@ -126,12 +130,12 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 
 #pragma mark Lifecycle
 
-- (id)init {
+- (instancetype)init {
 	NSAssert(NO, @"%@ must be initialized with a model class", self.class);
 	return nil;
 }
 
-- (id)initWithModelClass:(Class)modelClass {
+- (instancetype)initWithModelClass:(Class)modelClass _opaque_JSONKeyPathsByPropertyKey:(id)JSONKeyPathsByPropertyKey {
 	NSParameterAssert(modelClass != nil);
 	NSParameterAssert([modelClass conformsToProtocol:@protocol(MTLJSONSerializing)]);
 
@@ -140,7 +144,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 
 	_modelClass = modelClass;
 
-	_JSONKeyPathsByPropertyKey = [modelClass JSONKeyPathsByPropertyKey];
+	_JSONKeyPathsByPropertyKey = JSONKeyPathsByPropertyKey;
 
 	NSSet *propertyKeys = [self.modelClass propertyKeys];
 
@@ -170,6 +174,11 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 	_JSONAdaptersByModelClass = [NSMapTable strongToStrongObjectsMapTable];
 
 	return self;
+
+}
+
+- (instancetype)initWithModelClass:(Class)modelClass {
+	return (self = [self initWithModelClass:modelClass _opaque_JSONKeyPathsByPropertyKey:[modelClass JSONKeyPathsByPropertyKey]]);
 }
 
 #pragma mark Serialization
