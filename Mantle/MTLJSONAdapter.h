@@ -271,17 +271,17 @@ extern NSString * const MTLJSONAdapterThrownExceptionErrorKey;
 
 @interface MTLJSONAdapter (Deprecated)
 
-@property (nonatomic, strong, readonly) id<MTLJSONSerializing> model __attribute__((unavailable("Replaced by -modelFromJSONDictionary:error:")));
+@property (nonatomic, strong, readonly) id<MTLJSONSerializing> model MANTLE_UNAVAILABLE("Replaced by -modelFromJSONDictionary:error:");
 
-+ (nullable NSArray<NSDictionary<NSString *, id> *> *)JSONArrayFromModels:(NSArray *)models __attribute__((deprecated("Replaced by +JSONArrayFromModels:error:")));
++ (nullable NSArray<NSDictionary<NSString *, id> *> *)JSONArrayFromModels:(NSArray *)models MANTLE_DEPRECATED("Replaced by +JSONArrayFromModels:error:");
 
-+ (nullable NSDictionary<NSString *, id> *)JSONDictionaryFromModel:(MTLModel<MTLJSONSerializing> *)model __attribute__((deprecated("Replaced by +JSONDictionaryFromModel:error:")));
++ (nullable NSDictionary<NSString *, id> *)JSONDictionaryFromModel:(MTLModel<MTLJSONSerializing> *)model MANTLE_DEPRECATED("Replaced by +JSONDictionaryFromModel:error:");
 
-- (nullable NSDictionary<NSString *, id> *)JSONDictionary __attribute__((unavailable("Replaced by -JSONDictionaryFromModel:error:")));
-- (null_unspecified NSString *)JSONKeyPathForPropertyKey:(NSString *)key __attribute__((unavailable("Replaced by -serializablePropertyKeys:forModel:")));
-- (nullable id)initWithJSONDictionary:(NSDictionary<NSString *, id> *)JSONDictionary modelClass:(Class)modelClass error:(NSError **)error __attribute__((unavailable("Replaced by -initWithModelClass:")));
-- (nullable id)initWithModel:(id<MTLJSONSerializing>)model __attribute__((unavailable("Replaced by -initWithModelClass:"))) NS_SWIFT_UNAVAILABLE("Replaced by -initWithModelClass:");
-- (nullable NSDictionary<NSString *, id> *)serializeToJSONDictionary:(NSError **)error __attribute__((unavailable("Replaced by -JSONDictionaryFromModel:error:"))) NS_SWIFT_UNAVAILABLE("Replaced by -JSONDictionaryFromModel:error:");
+- (nullable NSDictionary<NSString *, id> *)JSONDictionary MANTLE_UNAVAILABLE("Replaced by -JSONDictionaryFromModel:error:");
+- (null_unspecified NSString *)JSONKeyPathForPropertyKey:(NSString *)key MANTLE_UNAVAILABLE("Replaced by -serializablePropertyKeys:forModel:");
+- (nullable id)initWithJSONDictionary:(NSDictionary<NSString *, id> *)JSONDictionary modelClass:(Class)modelClass error:(NSError **)error MANTLE_UNAVAILABLE("Replaced by -initWithModelClass:");
+- (nullable id)initWithModel:(id<MTLJSONSerializing>)model MANTLE_UNAVAILABLE("Replaced by -initWithModelClass:");
+- (nullable NSDictionary<NSString *, id> *)serializeToJSONDictionary:(NSError **)error MANTLE_UNAVAILABLE("Replaced by -JSONDictionaryFromModel:error:");
 
 @end
 
