@@ -113,6 +113,10 @@
 		DB2767F91CE2AB290050A7A7 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB2767EB1CE2AB0B0050A7A7 /* Quick.framework */; };
 		DB2768251CE2B21F0050A7A7 /* MTLDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2768241CE2B21F0050A7A7 /* MTLDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DB2768261CE2B21F0050A7A7 /* MTLDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = DB2768241CE2B21F0050A7A7 /* MTLDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DBF0F3431C518D40002CD163 /* MTLJSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F3421C518D40002CD163 /* MTLJSONAdapter.swift */; };
+		DBF0F3441C518D40002CD163 /* MTLJSONAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F3421C518D40002CD163 /* MTLJSONAdapter.swift */; };
+		DBF0F3491C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F3481C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift */; };
+		DBF0F34A1C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF0F3481C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -320,6 +324,8 @@
 		DB2767C31CE2AB0A0050A7A7 /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = Carthage/Checkouts/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
 		DB2767C61CE2AB0B0050A7A7 /* Quick.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Quick.xcodeproj; path = Carthage/Checkouts/Quick/Quick.xcodeproj; sourceTree = "<group>"; };
 		DB2768241CE2B21F0050A7A7 /* MTLDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTLDefines.h; sourceTree = "<group>"; };
+		DBF0F3421C518D40002CD163 /* MTLJSONAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTLJSONAdapter.swift; sourceTree = "<group>"; };
+		DBF0F3481C519D0E002CD163 /* MTLModel+MTLMappingAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MTLModel+MTLMappingAdditions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
