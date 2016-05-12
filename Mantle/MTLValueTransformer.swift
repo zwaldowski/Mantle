@@ -23,7 +23,7 @@ private func objCApplyTransform<In, Out>(transform: In throws -> Out, value: Any
 }
 
 /// A value transformer supporting function-based transformation.
-public final class MTLValueTransformer<In, Out>: NSValueTransformer, MTLTransformerErrorHandling {
+public final class MTLValueTransformer<In, Out>: NSValueTransformer {
 
 	/// The forward transform. May be invoked manually.
 	public let transform: In throws -> Out
@@ -63,14 +63,14 @@ public final class MTLValueTransformer<In, Out>: NSValueTransformer, MTLTransfor
     ///   occured while transforming the value.
 	/// - returns: The result of the transformation. Users should inspect
     ///   `success` to decide how to proceed with the result.
-	public func transformedValue(value: AnyObject?, success: UnsafeMutablePointer<ObjCBool>, error: NSErrorPointer) -> AnyObject? {
+	public override func transformedValue(value: AnyObject?, success: UnsafeMutablePointer<ObjCBool>, error: NSErrorPointer) -> AnyObject? {
 		return objCApplyTransform(transform, value: value, success: success, error: error)
 	}
 
 }
 
 /// A value transformer supporting reversible function-based transformation.
-public final class MTLReversibleValueTransformer<In, Out>: NSValueTransformer, MTLTransformerErrorHandling {
+public final class MTLReversibleValueTransformer<In, Out>: NSValueTransformer {
 
 	/// The forward transform. May be invoked manually.
 	public let transform: In throws -> Out
@@ -119,7 +119,7 @@ public final class MTLReversibleValueTransformer<In, Out>: NSValueTransformer, M
     ///   occured while transforming the value.
 	/// - returns: The result of the transformation. Users should inspect
     ///   `success` to decide how to proceed with the result.
-	public func transformedValue(value: AnyObject?, success: UnsafeMutablePointer<ObjCBool>, error: NSErrorPointer) -> AnyObject? {
+	public override func transformedValue(value: AnyObject?, success: UnsafeMutablePointer<ObjCBool>, error: NSErrorPointer) -> AnyObject? {
 		return objCApplyTransform(transform, value: value, success: success, error: error)
 	}
 
@@ -132,7 +132,7 @@ public final class MTLReversibleValueTransformer<In, Out>: NSValueTransformer, M
     ///   occured while transforming the value.
 	/// - returns: The result of the transformation. Users should inspect
     ///   `success` to decide how to proceed with the result.
-	public func reverseTransformedValue(value: AnyObject?, success: UnsafeMutablePointer<ObjCBool>, error: NSErrorPointer) -> AnyObject? {
+	public override func reverseTransformedValue(value: AnyObject?, success: UnsafeMutablePointer<ObjCBool>, error: NSErrorPointer) -> AnyObject? {
 		return objCApplyTransform(reverseTransform, value: value, success: success, error: error)
 	}
 

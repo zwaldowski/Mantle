@@ -208,17 +208,11 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 			// dictionaryValue we're going to insert into.
 			if ([value isEqual:NSNull.null]) value = nil;
 
-			if ([transformer respondsToSelector:@selector(reverseTransformedValue:success:error:)]) {
-				id<MTLTransformerErrorHandling> errorHandlingTransformer = (id)transformer;
+			value = [transformer reverseTransformedValue:value success:&success error:&tmpError];
 
-				value = [errorHandlingTransformer reverseTransformedValue:value success:&success error:&tmpError];
-
-				if (!success) {
-					*stop = YES;
-					return;
-				}
-			} else {
-				value = [transformer reverseTransformedValue:value] ?: NSNull.null;
+			if (!success) {
+				*stop = YES;
+				return;
 			}
 		}
 
@@ -317,47 +311,20 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 
 		if (value == nil) continue;
 
-		@try {
-			NSValueTransformer *transformer = self.valueTransformersByPropertyKey[propertyKey];
-			if (transformer != nil) {
-				// Map NSNull -> nil for the transformer, and then back for the
-				// dictionary we're going to insert into.
-				if ([value isEqual:NSNull.null]) value = nil;
+		NSValueTransformer *transformer = self.valueTransformersByPropertyKey[propertyKey];
+		if (transformer != nil) {
+			// Map NSNull -> nil for the transformer, and then back for the
+			// dictionary we're going to insert into.
+			if ([value isEqual:NSNull.null]) value = nil;
 
-				if ([transformer respondsToSelector:@selector(transformedValue:success:error:)]) {
-					id<MTLTransformerErrorHandling> errorHandlingTransformer = (id)transformer;
+			BOOL success = YES;
+			value = [transformer transformedValue:value success:&success error:error];
+			if (!success) return nil;
 
-					BOOL success = YES;
-					value = [errorHandlingTransformer transformedValue:value success:&success error:error];
-
-					if (!success) return nil;
-				} else {
-					value = [transformer transformedValue:value];
-				}
-
-				if (value == nil) value = NSNull.null;
-			}
-
-			dictionaryValue[propertyKey] = value;
-		} @catch (NSException *ex) {
-			NSLog(@"*** Caught exception %@ parsing JSON key path \"%@\" from: %@", ex, JSONKeyPaths, JSONDictionary);
-
-			// Fail fast in Debug builds.
-			if (MTLIsDebugging()) {
-				@throw ex;
-			} else if (error != NULL) {
-				NSDictionary *userInfo = @{
-					NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Caught exception parsing JSON key path \"%@\" for model class: %@", JSONKeyPaths, self.modelClass],
-					NSLocalizedRecoverySuggestionErrorKey: ex.description,
-					NSLocalizedFailureReasonErrorKey: ex.reason,
-					MTLJSONAdapterThrownExceptionErrorKey: ex
-				};
-
-				*error = [NSError errorWithDomain:MTLJSONAdapterErrorDomain code:MTLJSONAdapterErrorExceptionThrown userInfo:userInfo];
-			}
-
-			return nil;
+			if (value == nil) value = NSNull.null;
 		}
+
+		dictionaryValue[propertyKey] = value;
 	}
 
 	id model = [self.modelClass modelWithDictionary:dictionaryValue error:error];
@@ -474,7 +441,7 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 
 @implementation MTLJSONAdapter (ValueTransformers)
 
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)dictionaryTransformerWithModelClass:(Class)modelClass {
++ (NSValueTransformer *)dictionaryTransformerWithModelClass:(Class)modelClass {
 	NSParameterAssert([modelClass conformsToProtocol:@protocol(MTLModel)]);
 	NSParameterAssert([modelClass conformsToProtocol:@protocol(MTLJSONSerializing)]);
 	__block MTLJSONAdapter *adapter;
@@ -536,8 +503,8 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 		}];
 }
 
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)arrayTransformerWithModelClass:(Class)modelClass {
-	id<MTLTransformerErrorHandling> dictionaryTransformer = [self dictionaryTransformerWithModelClass:modelClass];
++ (NSValueTransformer *)arrayTransformerWithModelClass:(Class)modelClass {
+	NSValueTransformer *dictionaryTransformer = [self dictionaryTransformerWithModelClass:modelClass];
 	
 	return [MTLValueTransformer
 		transformerUsingForwardBlock:^ id (NSArray *dictionaries, BOOL *success, NSError **error) {

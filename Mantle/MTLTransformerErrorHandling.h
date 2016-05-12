@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MTLDefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,6 +29,9 @@ extern NS_SWIFT_UNAVAILABLE("Use MTLValueTransformerError.InvalidInput") const N
 /// Transformers conforming to this protocol are expected to associate this key
 /// with the invalid input in the userInfo dictionary.
 extern NS_SWIFT_UNAVAILABLE("Use MTLValueTransformerError.InvalidInput") NSString * const MTLTransformerErrorHandlingInputValueErrorKey;
+
+/// Associated with the NSException that was caught.
+extern NSString * const MTLTransformerErrorHandlingThrownExceptionErrorKey MANTLE_UNAVAILABLE("Use MTLModelThrownExceptionErrorKey");
 
 /// This protocol can be implemented by NSValueTransformer subclasses to
 /// communicate errors that occur during transformation.
@@ -65,6 +69,9 @@ extern NS_SWIFT_UNAVAILABLE("Use MTLValueTransformerError.InvalidInput") NSStrin
 /// result.
 - (nullable id)reverseTransformedValue:(nullable id)value success:(BOOL *)success error:(NSError **)error NS_SWIFT_NOTHROW;
 
+@end
+
+@interface NSValueTransformer (MTLTransformerErrorHandling) <MTLTransformerErrorHandling>
 @end
 
 NS_ASSUME_NONNULL_END

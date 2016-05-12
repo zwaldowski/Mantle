@@ -21,16 +21,22 @@ NSString * const MTLModelThrownExceptionErrorKey = @"MTLModelThrownException";
 
 @implementation NSError (MTLModelException)
 
-+ (instancetype)mtl_modelErrorWithException:(NSException *)exception {
+- (instancetype)mtl_initWithModelException:(NSException *)exception localizedDescription:(nullable NSString *)description {
 	NSParameterAssert(exception != nil);
 
-	NSDictionary *userInfo = @{
-		NSLocalizedDescriptionKey: exception.description,
+	NSMutableDictionary *userInfo = [@{
 		NSLocalizedFailureReasonErrorKey: exception.reason,
 		MTLModelThrownExceptionErrorKey: exception
-	};
+	} mutableCopy];
 
-	return [NSError errorWithDomain:MTLModelErrorDomain code:MTLModelErrorExceptionThrown userInfo:userInfo];
+	if (description != nil) {
+		userInfo[NSLocalizedDescriptionKey] = description;
+		userInfo[NSLocalizedRecoverySuggestionErrorKey] = exception.description;
+	} else {
+		userInfo[NSLocalizedDescriptionKey] = exception.description;
+	}
+
+	return (self = [self initWithDomain:MTLModelErrorDomain code:MTLModelErrorExceptionThrown userInfo:userInfo]);
 }
 
 @end

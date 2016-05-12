@@ -253,7 +253,7 @@ NS_REFINED_FOR_SWIFT
 ///
 /// Returns a reversible transformer which uses the class of the receiver for
 /// transforming values back and forth.
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)dictionaryTransformerWithModelClass:(Class)modelClass NS_SWIFT_UNAVAILABLE("Use MTLJSONAdapter.dictionaryTransformer(forType:)");
++ (NSValueTransformer *)dictionaryTransformerWithModelClass:(Class)modelClass NS_SWIFT_UNAVAILABLE("Use MTLJSONAdapter.dictionaryTransformer(forType:)");
 
 /// Creates a reversible transformer to convert an array of JSON dictionaries
 /// into an array of MTLModel objects, and vice-versa.
@@ -264,7 +264,7 @@ NS_REFINED_FOR_SWIFT
 ///
 /// Returns a reversible transformer which uses the class of the receiver for
 /// transforming array elements back and forth.
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)arrayTransformerWithModelClass:(Class)modelClass NS_SWIFT_UNAVAILABLE("Use MTLJSONAdapter.arrayTransformer(forType:)");
++ (NSValueTransformer *)arrayTransformerWithModelClass:(Class)modelClass NS_SWIFT_UNAVAILABLE("Use MTLJSONAdapter.arrayTransformer(forType:)");
 
 /// This value transformer is used by MTLJSONAdapter to automatically convert
 /// NSURL properties to JSON strings and vice versa.

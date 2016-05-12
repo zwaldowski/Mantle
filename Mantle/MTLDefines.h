@@ -20,3 +20,4 @@
     __attribute__((availability(watchos,unavailable,message="" __VA_ARGS__))) \
 	__attribute__((availability(tvos,unavailable,message="" __VA_ARGS__))) \
 	__attribute__((availability(swift,unavailable,message="" __VA_ARGS__)))
+#define MANTLE_EXTENDED_INIT __attribute__((objc_method_family(init)))
