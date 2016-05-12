@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// A value transformer supporting block-based transformation.
 ///
+NS_REFINED_FOR_SWIFT
 @interface MTLValueTransformer<__covariant InType, OutType>: NSValueTransformer <MTLTransformerErrorHandling>
 
 /// Returns a transformer which transforms values using the given block. Reverse
