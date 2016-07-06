@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "MTLDefines.h"
 #import "MTLTransformerErrorHandling.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -110,9 +110,9 @@ extern NSString * const MTLBooleanValueTransformerName;
 /// is not a member of class. Otherwise, the value is simply passed through.
 + (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_validatingTransformerForClass:(Class)modelClass;
 
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_JSONDictionaryTransformerWithModelClass:(Class)modelClass __attribute__((deprecated("Replaced by +[MTLJSONAdapter dictionaryTransformerWithModelClass:]")));
++ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_JSONDictionaryTransformerWithModelClass:(Class)modelClass  MANTLE_DEPRECATED("Replaced by +[MTLJSONAdapter dictionaryTransformerWithModelClass:]");
 
-+ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_JSONArrayTransformerWithModelClass:(Class)modelClass __attribute__((deprecated("Replaced by +[MTLJSONAdapter arrayTransformerWithModelClass:]")));
++ (NSValueTransformer<MTLTransformerErrorHandling> *)mtl_JSONArrayTransformerWithModelClass:(Class)modelClass MANTLE_DEPRECATED("Replaced by +[MTLJSONAdapter arrayTransformerWithModelClass:]");
 
 @end
 
