@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MTLDefines.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSDictionary<KeyType, ObjectType> (MTLManipulationAdditions_Deprecated)
 
-- (NSDictionary<KeyType, ObjectType> *)mtl_dictionaryByRemovingEntriesWithKeys:(NSSet<KeyType> *)keys __attribute__((deprecated("Replaced by -mtl_dictionaryByRemovingValuesForKeys:")));
+- (NSDictionary<KeyType, ObjectType> *)mtl_dictionaryByRemovingEntriesWithKeys:(NSSet<KeyType> *)keys MANTLE_DEPRECATED("Replaced by -mtl_dictionaryByRemovingValuesForKeys:");
 
 @end
 
